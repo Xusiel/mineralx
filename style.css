@@ -8,7 +8,7 @@ body {
 
 /* Header styles */
 header {
-    background-color: #2a9d8f;
+    background-color: #4c4c4c;
     color: white;
     padding: 20px;
     text-align: center;
@@ -32,7 +32,7 @@ header {
 }
 
 .mineral-card h3 {
-    color: #264653;
+    color: #0578a6;
 }
 
 .mineral-card p {
