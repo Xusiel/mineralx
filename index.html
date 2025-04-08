@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MineralX</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>MineralX</h1>
+        <p>Welcome to the Mineralogy Project!</p>
+    </header>
+
+    <section>
+        <h2>Minerals</h2>
+        <div class="minerals">
+            <div class="mineral-card">
+                <h3>Mineral 1</h3>
+                <p>Description of Mineral 1</p>
+            </div>
+            <div class="mineral-card">
+                <h3>Mineral 2</h3>
+                <p>Description of Mineral 2</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Minerals and Rocks Information">
+    <title>Minerals & Rocks</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Minerals & Rocks</h1>
+    </header>
+
+    <section id="minerals">
+        <h2>Minerals</h2>
+        
+        <!-- Mineral 1: Quartz -->
+        <div class="mineral">
+            <h3>Quartz</h3>
+            <img src="images/quartz.jpg" alt="Quartz mineral">
+            <p><strong>Chemical Composition:</strong> SiO₂</p>
+            <p><strong>Hardness:</strong> 7 (Mohs scale)</p>
+            <p><strong>Color:</strong> Colorless, white, pink, purple</p>
+            <p><strong>Uses:</strong> Used in electronics, watches, and jewelry.</p>
+        </div>
+        
+        <!-- Mineral 2: Fluorite -->
+        <div class="mineral">
+            <h3>Fluorite</h3>
+            <img src="images/fluorite.jpg" alt="Fluorite mineral">
+            <p><strong>Chemical Composition:</strong> CaF₂</p>
+            <p><strong>Hardness:</strong> 4 (Mohs scale)</p>
+            <p><strong>Color:</strong> Purple, green, yellow</p>
+            <p><strong>Uses:</strong> Used in the production of fluorine and in jewelry.</p>
+        </div>
+        
+        <!-- Add more minerals here -->
+    </section>
+
+    <section id="rocks">
+        <h2>Rocks</h2>
+        
+        <!-- Rock 1: Basalt -->
+        <div class="rock">
+            <h3>Basalt</h3>
+            <img src="images/basalt.jpg" alt="Basalt rock">
+            <p><strong>Chemical Composition:</strong> SiO₂, Al₂O₃, FeO, MgO</p>
+            <p><strong>Features:</strong> Dense, dark-colored, fine-grained</p>
+            <p><strong>Uses:</strong> Construction, road-building, and as aggregates in concrete.</p>
+        </div>
+        
+        <!-- Rock 2: Granite -->
+        <div class="rock">
+            <h3>Granite</h3>
+            <img src="images/granite.jpg" alt="Granite rock">
+            <p><strong>Chemical Composition:</strong> SiO₂, Al₂O₃, Fe₂O₃</p>
+            <p><strong>Features:</strong> Coarse-grained, durable, and light-colored</p>
+            <p><strong>Uses:</strong> Building material, countertops, monuments.</p>
+        </div>
+
+        <!-- Add more rocks here -->
+    </section>
+
+    <footer>
+        <p>&copy; 2025 MineralX Project</p>
+    </footer>
+    
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Minerals and Rocks Information">
+    <title>Minerals & Rocks</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Minerals & Rocks</h1>
+    </header>
+
+    <!-- جعبه جستجو و فیلتر -->
+    <section id="search-filter">
+        <h2>Search and Filter</h2>
+        <form id="search-form">
+            <label for="search">Search by name:</label>
+            <input type="text" id="search" name="search" placeholder="Search for a mineral or rock...">
+            
+            <label for="type">Filter by type:</label>
+            <select id="type" name="type">
+                <option value="">All</option>
+                <option value="mineral">Minerals</option>
+                <option value="rock">Rocks</option>
+            </select>
+
+            <button type="submit">Search</button>
+        </form>
+    </section>
+
+    <section id="minerals">
+        <h2>Minerals</h2>
+        <div class="mineral" data-type="mineral">
+            <h3>Quartz</h3>
+            <img src="images/quartz.jpg" alt="Quartz mineral">
+            <p><strong>Chemical Composition:</strong> SiO₂</p>
+            <p><strong>Hardness:</strong> 7 (Mohs scale)</p>
+            <p><strong>Color:</strong> Colorless, white, pink, purple</p>
+            <p><strong>Uses:</strong> Used in electronics, watches, and jewelry.</p>
+        </div>
+        
+        <div class="mineral" data-type="mineral">
+            <h3>Fluorite</h3>
+            <img src="images/fluorite.jpg" alt="Fluorite mineral">
+            <p><strong>Chemical Composition:</strong> CaF₂</p>
+            <p><strong>Hardness:</strong> 4 (Mohs scale)</p>
+            <p><strong>Color:</strong> Purple, green, yellow</p>
+            <p><strong>Uses:</strong> Used in the production of fluorine and in jewelry.</p>
+        </div>
+        
+        <!-- Add more minerals here -->
+    </section>
+
+    <section id="rocks">
+        <h2>Rocks</h2>
+        <div class="rock" data-type="rock">
+            <h3>Basalt</h3>
+            <img src="images/basalt.jpg" alt="Basalt rock">
+            <p><strong>Chemical Composition:</strong> SiO₂, Al₂O₃, FeO, MgO</p>
+            <p><strong>Features:</strong> Dense, dark-colored, fine-grained</p>
+            <p><strong>Uses:</strong> Construction, road-building, and as aggregates in concrete.</p>
+        </div>
+        
+        <div class="rock" data-type="rock">
+            <h3>Granite</h3>
+            <img src="images/granite.jpg" alt="Granite rock">
+            <p><strong>Chemical Composition:</strong> SiO₂, Al₂O₃, Fe₂O₃</p>
+            <p><strong>Features:</strong> Coarse-grained, durable, and light-colored</p>
+            <p><strong>Uses:</strong> Building material, countertops, monuments.</p>
+        </div>
+
+        <!-- Add more rocks here -->
+    </section>
+
+    <footer>
+        <p>&copy; 2025 MineralX Project</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
