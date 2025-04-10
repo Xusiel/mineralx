@@ -4,184 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MineralX</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <h1>MineralX</h1>
-        <p>Welcome to the Mineralogy Project!</p>
-    </header>
-
-    <section>
-        <h2>Minerals</h2>
-        <div class="minerals">
-            <div class="mineral-card">
-                <h3>Mineral 1</h3>
-                <p>Description of Mineral 1</p>
-            </div>
-            <div class="mineral-card">
-                <h3>Mineral 2</h3>
-                <p>Description of Mineral 2</p>
-            </div>
-        </div>
-    </section>
-
-    <script src="script.js"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Minerals and Rocks Information">
-    <title>Minerals & Rocks</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
     <header>
-        <h1>Minerals & Rocks</h1>
-    </header>
-
-    <section id="minerals">
-        <h2>Minerals</h2>
-        
-        <!-- Mineral 1: Quartz -->
-        <div class="mineral">
-            <h3>Quartz</h3>
-            <img src="images/quartz.jpg" alt="Quartz mineral">
-            <p><strong>Chemical Composition:</strong> SiO₂</p>
-            <p><strong>Hardness:</strong> 7 (Mohs scale)</p>
-            <p><strong>Color:</strong> Colorless, white, pink, purple</p>
-            <p><strong>Uses:</strong> Used in electronics, watches, and jewelry.</p>
+        <div class="logo" onclick="showSection('home')">
+            <h1>MineralX</h1>
         </div>
-        
-        <!-- Mineral 2: Fluorite -->
-        <div class="mineral">
-            <h3>Fluorite</h3>
-            <img src="images/fluorite.jpg" alt="Fluorite mineral">
-            <p><strong>Chemical Composition:</strong> CaF₂</p>
-            <p><strong>Hardness:</strong> 4 (Mohs scale)</p>
-            <p><strong>Color:</strong> Purple, green, yellow</p>
-            <p><strong>Uses:</strong> Used in the production of fluorine and in jewelry.</p>
-        </div>
-        
-        <!-- Add more minerals here -->
-    </section>
-
-    <section id="rocks">
-        <h2>Rocks</h2>
-        
-        <!-- Rock 1: Basalt -->
-        <div class="rock">
-            <h3>Basalt</h3>
-            <img src="images/basalt.jpg" alt="Basalt rock">
-            <p><strong>Chemical Composition:</strong> SiO₂, Al₂O₃, FeO, MgO</p>
-            <p><strong>Features:</strong> Dense, dark-colored, fine-grained</p>
-            <p><strong>Uses:</strong> Construction, road-building, and as aggregates in concrete.</p>
-        </div>
-        
-        <!-- Rock 2: Granite -->
-        <div class="rock">
-            <h3>Granite</h3>
-            <img src="images/granite.jpg" alt="Granite rock">
-            <p><strong>Chemical Composition:</strong> SiO₂, Al₂O₃, Fe₂O₃</p>
-            <p><strong>Features:</strong> Coarse-grained, durable, and light-colored</p>
-            <p><strong>Uses:</strong> Building material, countertops, monuments.</p>
-        </div>
-
-        <!-- Add more rocks here -->
-    </section>
-
-    <footer>
-        <p>&copy; 2025 MineralX Project</p>
-    </footer>
-    
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Minerals and Rocks Information">
-    <title>Minerals & Rocks</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
-    <header>
-        <h1>Minerals & Rocks</h1>
-    </header>
-
-    <!-- جعبه جستجو و فیلتر -->
-    <section id="search-filter">
-        <h2>Search and Filter</h2>
-        <form id="search-form">
-            <label for="search">Search by name:</label>
-            <input type="text" id="search" name="search" placeholder="Search for a mineral or rock...">
-            
-            <label for="type">Filter by type:</label>
-            <select id="type" name="type">
-                <option value="">All</option>
-                <option value="mineral">Minerals</option>
-                <option value="rock">Rocks</option>
+        <div class="controls">
+            <button id="themeToggle" onclick="toggleTheme()">
+                <span class="sun-icon">☀️</span>
+                <span class="moon-icon">🌙</span>
+            </button>
+            <select id="languageSwitch" onchange="changeLanguage()">
+                <option value="en">English</option>
+                <option value="fa">فارسی</option>
             </select>
-
-            <button type="submit">Search</button>
-        </form>
-    </section>
-
-    <section id="minerals">
-        <h2>Minerals</h2>
-        <div class="mineral" data-type="mineral">
-            <h3>Quartz</h3>
-            <img src="images/quartz.jpg" alt="Quartz mineral">
-            <p><strong>Chemical Composition:</strong> SiO₂</p>
-            <p><strong>Hardness:</strong> 7 (Mohs scale)</p>
-            <p><strong>Color:</strong> Colorless, white, pink, purple</p>
-            <p><strong>Uses:</strong> Used in electronics, watches, and jewelry.</p>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
-        
-        <div class="mineral" data-type="mineral">
-            <h3>Fluorite</h3>
-            <img src="images/fluorite.jpg" alt="Fluorite mineral">
-            <p><strong>Chemical Composition:</strong> CaF₂</p>
-            <p><strong>Hardness:</strong> 4 (Mohs scale)</p>
-            <p><strong>Color:</strong> Purple, green, yellow</p>
-            <p><strong>Uses:</strong> Used in the production of fluorine and in jewelry.</p>
-        </div>
-        
-        <!-- Add more minerals here -->
-    </section>
+        <nav id="sidebar">
+            <button class="close-btn" onclick="toggleMenu()">✖</button>
+            <ul>
+                <li><a href="#home" id="menuHome" onclick="showSection('home'); toggleMenu()">Home</a></li>
+                <li><a href="#rocks" id="menuRocks" onclick="showSection('rocks'); toggleMenu()">Rocks & Minerals</a></li>
+                <li><a href="#search" id="menuSearch" onclick="showSection('search'); toggleMenu()">Search & Filter</a></li>
+                <li><a href="#about" id="menuAbout" onclick="showSection('about'); toggleMenu()">About Us</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <section id="rocks">
-        <h2>Rocks</h2>
-        <div class="rock" data-type="rock">
-            <h3>Basalt</h3>
-            <img src="images/basalt.jpg" alt="Basalt rock">
-            <p><strong>Chemical Composition:</strong> SiO₂, Al₂O₃, FeO, MgO</p>
-            <p><strong>Features:</strong> Dense, dark-colored, fine-grained</p>
-            <p><strong>Uses:</strong> Construction, road-building, and as aggregates in concrete.</p>
-        </div>
-        
-        <div class="rock" data-type="rock">
-            <h3>Granite</h3>
-            <img src="images/granite.jpg" alt="Granite rock">
-            <p><strong>Chemical Composition:</strong> SiO₂, Al₂O₃, Fe₂O₃</p>
-            <p><strong>Features:</strong> Coarse-grained, durable, and light-colored</p>
-            <p><strong>Uses:</strong> Building material, countertops, monuments.</p>
-        </div>
+    <main>
+        <section id="home" class="active">
+            <h1 id="title">MineralX</h1>
+            <p id="homeText">Discover the fascinating world of minerals with MineralX!</p>
+            <p id="homeSubText" style="text-align: center; font-style: italic; color: #7f8c8d;">Unveil the beauty and science of Earth's mineral treasures.</p>
+        </section>
 
-        <!-- Add more rocks here -->
-    </section>
+        <section id="rocks">
+            <h2 id="rocksTitle">Rocks & Minerals</h2>
+            <div id="rockList"></div>
+        </section>
+
+        <section id="search">
+            <h2 id="searchTitle">Search & Filter</h2>
+            <div class="filter-container">
+                <input type="text" id="searchInput" placeholder="Search by name...">
+                <div class="filter-options">
+                    <label for="hardnessMin" id="hardnessLabel">Hardness Range:</label>
+                    <input type="number" id="hardnessMin" min="1" max="10" placeholder="Min">
+                    <input type="number" id="hardnessMax" min="1" max="10" placeholder="Max">
+                    <div class="dropdown">
+                        <button class="dropdown-btn" id="colorLabel">Color</button>
+                        <div class="dropdown-content" id="colorFilter">
+                            <div data-value="Colorless"><span class="checkmark">✔</span> Colorless</div>
+                            <div data-value="White"><span class="checkmark">✔</span> White</div>
+                            <div data-value="Pink"><span class="checkmark">✔</span> Pink</div>
+                            <div data-value="Yellow"><span class="checkmark">✔</span> Yellow</div>
+                            <div data-value="Green"><span class="checkmark">✔</span> Green</div>
+                            <div data-value="Blue"><span class="checkmark">✔</span> Blue</div>
+                            <div data-value="Purple"><span class="checkmark">✔</span> Purple</div>
+                            <div data-value="Red"><span class="checkmark">✔</span> Red</div>
+                            <div data-value="Gold"><span class="checkmark">✔</span> Gold</div>
+                            <div data-value="Black"><span class="checkmark">✔</span> Black</div>
+                            <div data-value="Multicolor"><span class="checkmark">✔</span> Multicolor</div>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropdown-btn" id="locationLabel">Location</button>
+                        <div class="dropdown-content" id="locationFilter">
+                            <div data-value="Brazil"><span class="checkmark">✔</span> Brazil</div>
+                            <div data-value="Iran"><span class="checkmark">✔</span> Iran</div>
+                            <div data-value="Mexico"><span class="checkmark">✔</span> Mexico</div>
+                            <div data-value="USA"><span class="checkmark">✔</span> USA</div>
+                            <div data-value="India"><span class="checkmark">✔</span> India</div>
+                            <div data-value="China"><span class="checkmark">✔</span> China</div>
+                            <div data-value="Russia"><span class="checkmark">✔</span> Russia</div>
+                            <div data-value="Spain"><span class="checkmark">✔</span> Spain</div>
+                            <div data-value="Peru"><span class="checkmark">✔</span> Peru</div>
+                            <div data-value="Congo"><span class="checkmark">✔</span> Congo</div>
+                            <div data-value="South Africa"><span class="checkmark">✔</span> South Africa</div>
+                            <div data-value="Colombia"><span class="checkmark">✔</span> Colombia</div>
+                            <div data-value="Zambia"><span class="checkmark">✔</span> Zambia</div>
+                            <div data-value="Myanmar"><span class="checkmark">✔</span> Myanmar</div>
+                            <div data-value="Thailand"><span class="checkmark">✔</span> Thailand</div>
+                            <div data-value="Sri Lanka"><span class="checkmark">✔</span> Sri Lanka</div>
+                            <div data-value="Madagascar"><span class="checkmark">✔</span> Madagascar</div>
+                            <div data-value="Australia"><span class="checkmark">✔</span> Australia</div>
+                            <div data-value="Ethiopia"><span class="checkmark">✔</span> Ethiopia</div>
+                            <div data-value="Afghanistan"><span class="checkmark">✔</span> Afghanistan</div>
+                            <div data-value="Chile"><span class="checkmark">✔</span> Chile</div>
+                            <div data-value="Uruguay"><span class="checkmark">✔</span> Uruguay</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-buttons">
+                    <button id="searchBtn" onclick="filterRocks()">Search</button>
+                    <button id="resetBtn" onclick="resetFilters()">Reset Filters</button>
+                </div>
+            </div>
+            <div id="filteredRockList"></div>
+        </section>
+
+        <section id="about">
+            <h2 id="aboutTitle">About Us</h2>
+            <p id="aboutText">This site is dedicated to providing detailed information about rocks and minerals for enthusiasts, students, and professionals.</p>
+        </section>
+    </main>
 
     <footer>
-        <p>&copy; 2025 MineralX Project</p>
+        <p>© 2025 MineralX. All rights reserved.</p>
     </footer>
 
     <script src="script.js"></script>
-
 </body>
 </html>
