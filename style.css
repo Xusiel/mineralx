@@ -1,206 +1,553 @@
-/* General page styles */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    font-family: 'Roboto', Arial, sans-serif;
+    background: url('https://www.transparenttextures.com/patterns/rocky-wall.png') repeat, #d9ded8;
     margin: 0;
     padding: 0;
-}
-
-/* Header styles */
-header {
-    background-color: #4c4c4c;
-    color: white;
-    padding: 20px;
-    text-align: center;
-}
-
-/* Mineral card styles */
-.minerals {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-}
-
-.mineral-card {
-    background-color: white;
-    padding: 20px;
-    margin: 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 200px;
-    text-align: center;
-}
-
-.mineral-card h3 {
-    color: #0578a6;
-}
-
-.mineral-card p {
-    color: #6d6d6d;
-}
-/* styles.css */
-
-/* General styles */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    margin: 0;
-    padding: 0;
-}
-
-header {
-    background-color: #2c3e50;
-    color: white;
-    text-align: center;
-    padding: 20px;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 2.5em;
-}
-
-h2 {
-    color: #34495e;
-    text-align: center;
-    margin-top: 30px;
-}
-
-h3 {
-    color: #2980b9;
-}
-
-/* Styling for mineral and rock sections */
-section {
-    padding: 20px;
-}
-
-.mineral, .rock {
-    background-color: white;
-    border: 1px solid #ddd;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.mineral img, .rock img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-}
-
-.mineral p, .rock p {
-    font-size: 1.1em;
+    color: #2f2f2f;
     line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-/* Footer styling */
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #2c3e50;
-    color: white;
-}
-/* styles.css */
-
-/* General styles */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    margin: 0;
-    padding: 0;
+body.dark-theme {
+    background: url('https://www.transparenttextures.com/patterns/rocky-wall.png') repeat, #2c2f33;
+    color: #ecf0f1;
 }
 
 header {
-    background-color: #2c3e50;
-    color: white;
-    text-align: center;
-    padding: 20px;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 2.5em;
-}
-
-h2 {
-    color: #34495e;
-    text-align: center;
-    margin-top: 30px;
-}
-
-h3 {
-    color: #2980b9;
-}
-
-/* Styling for mineral and rock sections */
-section {
-    padding: 20px;
-}
-
-.mineral, .rock {
-    background-color: white;
-    border: 1px solid #ddd;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.mineral img, .rock img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-}
-
-.mineral p, .rock p {
-    font-size: 1.1em;
-    line-height: 1.6;
-}
-
-/* Search & Filter section */
-#search-filter {
-    background-color: #ecf0f1;
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 8px;
-}
-
-#search-filter form {
+    background: linear-gradient(90deg, #1a2a3a 0%, #2c3e50 100%);
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
 }
 
-#search-filter input, #search-filter select {
-    padding: 10px;
-    margin: 5px;
-    width: 250px;
-    font-size: 1em;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+.logo {
+    cursor: pointer;
+    transition: transform 0.3s;
 }
 
-#search-filter button {
-    padding: 10px 20px;
-    background-color: #2980b9;
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 1.8em;
+    color: #ecf0f1;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.menu-toggle {
+    width: 40px;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.menu-toggle span {
+    width: 100%;
+    height: 4px;
+    background: #ecf0f1;
+    border-radius: 2px;
+    transition: all 0.3s;
+}
+
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(8px, -8px);
+}
+
+#sidebar {
+    position: fixed;
+    top: 0;
+    right: -260px;
+    width: 250px;
+    height: 100%;
+    background: #2c3e50;
+    padding: 20px;
+    transition: right 0.3s ease;
+    z-index: 99;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.5);
+}
+
+#sidebar.active {
+    right: 0;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #34495e;
+    color: #ecf0f1;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.close-btn:hover {
+    background: #e74c3c;
+}
+
+#sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 50px;
+}
+
+#sidebar ul li {
+    margin: 20px 0;
+}
+
+#sidebar ul li a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 10px 15px;
+    display: block;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+#sidebar ul li a:hover {
+    background: #3498db;
+    color: white;
+}
+
+#languageSwitch {
+    padding: 8px 12px;
+    font-size: 16px;
+    background: #34495e;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
+    transition: background 0.3s;
 }
 
-#search-filter button:hover {
-    background-color: #3498db;
+#languageSwitch:hover {
+    background: #3498db;
 }
 
-/* Footer styling */
-footer {
+#themeToggle {
+    background: #34495e;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.3s;
+}
+
+#themeToggle:hover {
+    background: #3498db;
+}
+
+#themeToggle .moon-icon {
+    display: none;
+}
+
+body.dark-theme #themeToggle .sun-icon {
+    display: none;
+}
+
+body.dark-theme #themeToggle .moon-icon {
+    display: inline;
+}
+
+main {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    transition: background 0.3s;
+}
+
+body.dark-theme main {
+    background: rgba(44, 47, 51, 0.95);
+}
+
+section {
+    display: none;
+    padding: 20px;
+}
+
+section.active {
+    display: block;
+}
+
+h1, h2 {
+    color: #1a2a3a;
     text-align: center;
-    padding: 10px;
-    background-color: #2c3e50;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+body.dark-theme h1,
+body.dark-theme h2 {
+    color: #ecf0f1;
+}
+
+h1 {
+    font-size: 2.8em;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+
+h2 {
+    font-size: 2em;
+    border-bottom: 2px solid #3498db;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+p {
+    font-size: 1.1em;
+    color: #555;
+}
+
+body.dark-theme p {
+    color: #bdc3c7;
+}
+
+.rock-card {
+    background: #fff;
+    border: 2px solid #bdc3c7;
+    border-radius: 12px;
+    padding: 25px;
+    margin: 20px 0;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    display: flex;
+    gap: 20px;
+}
+
+body.dark-theme .rock-card {
+    background: #3a3f44;
+    border-color: #555;
+}
+
+.rock-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.25);
+    border-color: #3498db;
+}
+
+.rock-card img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.rock-card .info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.rock-card h2 {
+    margin: 0;
+    font-size: 1.9em;
+    color: #2c3e50;
+    text-align: left;
+}
+
+body.dark-theme .rock-card h2 {
+    color: #ecf0f1;
+}
+
+.rock-card p {
+    margin: 5px 0;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+}
+
+.rock-card p strong {
+    color: #1a2a3a;
+    margin-right: 10px;
+}
+
+body.dark-theme .rock-card p strong {
+    color: #ecf0f1;
+}
+
+#searchInput {
+    width: 100%;
+    max-width: 600px;
+    padding: 15px;
+    margin: 25px auto;
+    display: block;
+    border: 2px solid #7f8c8d;
+    border-radius: 10px;
+    font-size: 16px;
+    background: #f9f9f9;
+    transition: all 0.3s;
+}
+
+body.dark-theme #searchInput {
+    background: #3a3f44;
+    border-color: #555;
+    color: #ecf0f1;
+}
+
+#searchInput:focus {
+    border-color: #3498db;
+    background: white;
+    outline: none;
+}
+
+body.dark-theme #searchInput:focus {
+    background: #444;
+}
+
+.filter-container {
+    max-width: 800px;
+    margin: 25px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+body.dark-theme .filter-container {
+    background: rgba(44, 47, 51, 0.8);
+}
+
+.filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-options label {
+    font-weight: 700;
+    color: #1a2a3a;
+}
+
+body.dark-theme .filter-options label {
+    color: #ecf0f1;
+}
+
+.filter-options input[type="number"] {
+    width: 60px;
+    padding: 8px;
+    border: 2px solid #7f8c8d;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #f9f9f9;
+}
+
+body.dark-theme .filter-options input[type="number"] {
+    background: #3a3f44;
+    border-color: #555;
+    color: #ecf0f1;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-btn {
+    padding: 8px 16px;
+    background: #34495e;
+    color: #ecf0f1;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.dropdown-btn:hover {
+    background: #3498db;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background: #fff;
+    min-width: 120px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    z-index: 1;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+body.dark-theme .dropdown-content {
+    background: #3a3f44;
+}
+
+.dropdown-content div {
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: #2f2f2f;
+    transition: background 0.2s;
+}
+
+body.dark-theme .dropdown-content div {
+    color: #ecf0f1;
+}
+
+.dropdown-content div:hover {
+    background: #3498db;
     color: white;
+}
+
+.dropdown-content div.selected {
+    background: #2980b9;
+    color: white;
+}
+
+.dropdown-content .checkmark {
+    display: none;
+    font-size: 12px;
+}
+
+.dropdown-content div.selected .checkmark {
+    display: inline;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+#searchBtn {
+    padding: 10px 20px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#searchBtn:hover {
+    background: #2980b9;
+}
+
+#resetBtn {
+    padding: 10px 20px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#resetBtn:hover {
+    background: #c0392b;
+}
+
+footer {
+    background: #2c3e50;
+    color: #ecf0f1;
+    text-align: center;
+    padding: 15px;
+    margin-top: 40px;
+    font-size: 0.9em;
+}
+
+.rtl {
+    direction: rtl;
+}
+
+header, .controls, .filter-options, .filter-buttons {
+    direction: ltr !important;
+}
+
+.rtl .rock-card h2,
+.rtl h1,
+.rtl h2 {
+    text-align: right;
+}
+
+/* ریسپانسیو */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 200px;
+        right: -210px;
+    }
+
+    #sidebar.active {
+        right: 0;
+    }
+
+    .controls {
+        gap: 10px;
+    }
+
+    main {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    .rock-card {
+        padding: 15px;
+        flex-direction: column;
+    }
+
+    .rock-card img {
+        width: 100%;
+        height: 150px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    .logo h1 {
+        font-size: 1.5em;
+    }
 }
