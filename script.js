@@ -177,7 +177,6 @@ function filterRocks() {
 
     filteredRockList.innerHTML = "";
 
-    // چک کن که حداقل یه فیلتر فعال باشه
     const isFilterActive = searchInput !== "" || hardnessMin !== "" || hardnessMax !== "" || colorFilter.length > 0 || locationFilter.length > 0;
 
     if (!isFilterActive) {
@@ -302,11 +301,10 @@ function showSection(sectionId) {
         if (savedFilters.hardnessMin) document.getElementById("hardnessMin").value = savedFilters.hardnessMin;
         if (savedFilters.hardnessMax) document.getElementById("hardnessMax").value = savedFilters.hardnessMax;
 
-        // فقط اگه فیلترها ذخیره شده باشن، نتایج رو نشون بده
         if (savedFilters.searchInput || savedFilters.hardnessMin || savedFilters.hardnessMax || savedFilters.colors?.length || savedFilters.locations?.length) {
             filterRocks();
         } else {
-            document.getElementById("filteredRockList").innerHTML = ""; // خالی کردن نتایج موقع ورود
+            document.getElementById("filteredRockList").innerHTML = "";
         }
     }
 }
@@ -417,8 +415,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const savedLanguage = localStorage.getItem("language") || "en";
     setLanguage(savedLanguage);
 
-    const hash = window.location.hash || `#${lastActiveSection}`;
-    const sectionId = hash.replace("#", "");
+    // اگه هش تو URL باشه، همون رو نشون بده، وگرنه همیشه #home
+    const hash = window.location.hash;
+    const sectionId = hash ? hash.replace("#", "") : "home";
     showSection(sectionId);
 });
 
