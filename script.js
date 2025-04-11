@@ -34,9 +34,8 @@ const filterOptions = {
 
 const translations = {
     en: {
-        title: "MineralX",
-        homeText: "Discover the fascinating world of minerals with MineralX!",
-        homeSubText: "Unveil the beauty and science of Earth's mineral treasures.",
+        title: "Welcome to MineralX",
+        homeText: "Explore the wonders of Earth's minerals with us!",
         rocksTitle: "Rocks & Minerals",
         searchTitle: "Search & Filter",
         aboutTitle: "About Us",
@@ -54,12 +53,12 @@ const translations = {
         menuHome: "Home",
         menuRocks: "Rocks & Minerals",
         menuSearch: "Search & Filter",
-        menuAbout: "About Us"
+        menuAbout: "About Us",
+        exploreBtn: "Discover Rocks & Minerals"
     },
     fa: {
-        title: "MineralX",
-        homeText: "جهان شگفت‌انگیز کانی‌ها را با MineralX کشف کنید!",
-        homeSubText: "زیبایی و علم گنجینه‌های کانی زمین را آشکار کنید.",
+        title: "به MineralX خوش آمدید",
+        homeText: "شگفتی‌های کانی‌های زمین را با ما کاوش کنید!",
         rocksTitle: "سنگ‌ها و کانی‌ها",
         searchTitle: "جستجو و فیلتر",
         aboutTitle: "درباره ما",
@@ -77,11 +76,13 @@ const translations = {
         menuHome: "خانه",
         menuRocks: "سنگ‌ها و کانی‌ها",
         menuSearch: "جستجو و فیلتر",
-        menuAbout: "درباره ما"
+        menuAbout: "درباره ما",
+        exploreBtn: "کشف سنگ‌ها و کانی‌ها"
     }
 };
 
-let currentLanguage = "en";
+let currentLanguage = localStorage.getItem("language") || "en";
+let lastActiveSection = localStorage.getItem("lastSection") || "home";
 
 function normalizeString(str) {
     return str.replace(/[\s\u200C]+/g, " ").trim();
@@ -96,73 +97,100 @@ function updateFilters() {
     const colorFilter = document.querySelector('#colorFilter .dropdown-content');
     const locationFilter = document.querySelector('#locationFilter .dropdown-content');
 
-    colorFilter.innerHTML = filterOptions.colors[currentLanguage].map(color => 
-        `<div data-value="${color}"><span class="checkmark">✔</span> ${color}</div>`).join('');
-    locationFilter.innerHTML = filterOptions.locations[currentLanguage].map(location => 
-        `<div data-value="${location}"><span class="checkmark">✔</span> ${location}</div>`).join('');
+    if (colorFilter) {
+        colorFilter.innerHTML = filterOptions.colors[currentLanguage].map(color => 
+            `<div data-value="${color}"><span class="checkmark">✔</span> ${color}</div>`).join('');
+    }
+    if (locationFilter) {
+        locationFilter.innerHTML = filterOptions.locations[currentLanguage].map(location => 
+            `<div data-value="${location}"><span class="checkmark">✔</span> ${location}</div>`).join('');
+    }
 
     document.querySelectorAll('.dropdown-content div').forEach(item => {
         item.addEventListener('click', () => {
             item.classList.toggle('selected');
+            saveFilterState(); // ذخیره حالت فیلترها بعد از تغییر
         });
     });
+
+    // بازسازی فیلترهای ذخیره‌شده
+    const savedFilters = JSON.parse(localStorage.getItem("searchFilters") || "{}");
+    if (savedFilters.colors) {
+        savedFilters.colors.forEach(color => {
+            const item = document.querySelector(`#colorFilter .dropdown-content div[data-value="${color}"]`);
+            if (item) item.classList.add("selected");
+        });
+    }
+    if (savedFilters.locations) {
+        savedFilters.locations.forEach(location => {
+            const item = document.querySelector(`#locationFilter .dropdown-content div[data-value="${location}"]`);
+            if (item) item.classList.add("selected");
+        });
+    }
+}
+
+function saveFilterState() {
+    const searchInput = document.getElementById("searchInput")?.value || "";
+    const hardnessMin = document.getElementById("hardnessMin")?.value || "";
+    const hardnessMax = document.getElementById("hardnessMax")?.value || "";
+    const colorFilter = Array.from(document.querySelectorAll('#colorFilter .dropdown-content .selected')).map(item => normalizeString(item.getAttribute('data-value')));
+    const locationFilter = Array.from(document.querySelectorAll('#locationFilter .dropdown-content .selected')).map(item => normalizeString(item.getAttribute('data-value')));
+
+    const filterState = {
+        searchInput,
+        hardnessMin,
+        hardnessMax,
+        colors: colorFilter,
+        locations: locationFilter
+    };
+    localStorage.setItem("searchFilters", JSON.stringify(filterState));
 }
 
 function displayRocks(containerId) {
     const rockList = document.getElementById(containerId);
-    rockList.innerHTML = "";
+    if (!rockList) return;
 
+    rockList.innerHTML = "";
     rocks.forEach(rock => {
         const rockDiv = document.createElement("div");
-        rockDiv.className = "rock-card";
+        rockDiv.className = "rock-card-mini";
         rockDiv.innerHTML = `
-            <img src="${rock.image}" alt="${rock.name[currentLanguage]}" onerror="this.src='https://via.placeholder.com/150?text=No+Image';">
-            <div class="info">
-                <h2>${rock.name[currentLanguage]}</h2>
-                <p><strong>${translations[currentLanguage].formulaLabel}:</strong> ${rock.formula}</p>
-                <p><strong>${translations[currentLanguage].hardnessLabel}:</strong> ${rock.hardness}</p>
-                <p><strong>${translations[currentLanguage].colorLabel}:</strong> ${rock.color[currentLanguage]}</p>
-                <p><strong>${translations[currentLanguage].locationLabel}:</strong> ${rock.location[currentLanguage]}</p>
-                <p><strong>${translations[currentLanguage].usageLabel}:</strong> ${rock.usage[currentLanguage]}</p>
-            </div>
+            <img src="${rock.image}" alt="${rock.name[currentLanguage]}" onerror="this.src='https://via.placeholder.com/100?text=No+Image';">
+            <h3>${rock.name[currentLanguage]}</h3>
         `;
+        rockDiv.addEventListener("click", () => {
+            localStorage.setItem("lastSection", lastActiveSection);
+            saveFilterState(); // ذخیره فیلترها قبل از رفتن
+            window.location.href = `rock.html?id=${rock.name.en.toLowerCase()}`;
+        });
         rockList.appendChild(rockDiv);
     });
 }
 
 function filterRocks() {
-    const searchInput = normalizeString(document.getElementById("searchInput").value.toLowerCase());
-    const hardnessMin = parseInt(document.getElementById("hardnessMin").value) || 1;
-    const hardnessMax = parseInt(document.getElementById("hardnessMax").value) || 10;
+    const searchInput = normalizeString(document.getElementById("searchInput")?.value.toLowerCase() || "");
+    const hardnessMin = parseInt(document.getElementById("hardnessMin")?.value) || 1;
+    const hardnessMax = parseInt(document.getElementById("hardnessMax")?.value) || 10;
     const colorFilter = Array.from(document.querySelectorAll('#colorFilter .dropdown-content .selected')).map(item => normalizeString(item.getAttribute('data-value')));
     const locationFilter = Array.from(document.querySelectorAll('#locationFilter .dropdown-content .selected')).map(item => normalizeString(item.getAttribute('data-value')));
     const filteredRockList = document.getElementById("filteredRockList");
-    filteredRockList.innerHTML = "";
+    if (!filteredRockList) return;
 
-    console.log("Starting filterRocks...");
+    filteredRockList.innerHTML = "";
 
     const filtered = rocks.filter(rock => {
         const nameMatch = normalizeString(rock.name.en.toLowerCase()).includes(searchInput) || 
                           normalizeString(rock.name.fa.toLowerCase()).includes(searchInput);
-
         const hardnessMatch = rock.hardness >= hardnessMin && rock.hardness <= hardnessMax;
-
-        const rawColors = rock.color[currentLanguage];
-        const rockColors = splitColors(rawColors);
-        console.log(`Rock: ${rock.name[currentLanguage]}, Raw: "${rawColors}", Split: ${JSON.stringify(rockColors)}, Filter: ${JSON.stringify(colorFilter)}`);
-        const colorMatch = colorFilter.length === 0 || colorFilter.some(filterColor => {
-            const match = rockColors.includes(filterColor);
-            console.log(`  Comparing "${filterColor}" with ${JSON.stringify(rockColors)} -> ${match}`);
-            return match;
-        });
-
+        const rockColors = splitColors(rock.color[currentLanguage]);
+        const colorMatch = colorFilter.length === 0 || colorFilter.some(filterColor => rockColors.includes(filterColor));
         const rockLocations = splitColors(rock.location[currentLanguage]);
-        const locationMatch = locationFilter.length === 0 || locationFilter.some(filterLocation => 
-            rockLocations.includes(filterLocation)
-        );
+        const locationMatch = locationFilter.length === 0 || locationFilter.some(filterLocation => rockLocations.includes(filterLocation));
 
         return nameMatch && hardnessMatch && colorMatch && locationMatch;
     });
+
+    saveFilterState(); // ذخیره فیلترها بعد از اعمال
 
     if (filtered.length === 0) {
         const noResults = document.createElement("p");
@@ -173,37 +201,38 @@ function filterRocks() {
     } else {
         filtered.forEach(rock => {
             const rockDiv = document.createElement("div");
-            rockDiv.className = "rock-card";
+            rockDiv.className = "rock-card-mini";
             rockDiv.innerHTML = `
-                <img src="${rock.image}" alt="${rock.name[currentLanguage]}" onerror="this.src='https://via.placeholder.com/150?text=No+Image';">
-                <div class="info">
-                    <h2>${rock.name[currentLanguage]}</h2>
-                    <p><strong>${translations[currentLanguage].formulaLabel}:</strong> ${rock.formula}</p>
-                    <p><strong>${translations[currentLanguage].hardnessLabel}:</strong> ${rock.hardness}</p>
-                    <p><strong>${translations[currentLanguage].colorLabel}:</strong> ${rock.color[currentLanguage]}</p>
-                    <p><strong>${translations[currentLanguage].locationLabel}:</strong> ${rock.location[currentLanguage]}</p>
-                    <p><strong>${translations[currentLanguage].usageLabel}:</strong> ${rock.usage[currentLanguage]}</p>
-                </div>
+                <img src="${rock.image}" alt="${rock.name[currentLanguage]}" onerror="this.src='https://via.placeholder.com/100?text=No+Image';">
+                <h3>${rock.name[currentLanguage]}</h3>
             `;
+            rockDiv.addEventListener("click", () => {
+                localStorage.setItem("lastSection", lastActiveSection);
+                saveFilterState(); // ذخیره فیلترها قبل از رفتن
+                window.location.href = `rock.html?id=${rock.name.en.toLowerCase()}`;
+            });
             filteredRockList.appendChild(rockDiv);
         });
     }
 }
 
 function showSuggestions() {
-    const searchInput = normalizeString(document.getElementById("searchInput").value.toLowerCase());
+    const searchInput = document.getElementById("searchInput");
     const suggestionsDiv = document.getElementById("suggestions");
+    if (!searchInput || !suggestionsDiv) return;
+
+    const inputValue = normalizeString(searchInput.value.toLowerCase());
     suggestionsDiv.innerHTML = "";
 
-    if (searchInput === "") {
+    if (inputValue === "") {
         suggestionsDiv.style.display = "none";
         return;
     }
 
     const suggestions = rocks
         .filter(rock => 
-            normalizeString(rock.name.en.toLowerCase()).includes(searchInput) || 
-            normalizeString(rock.name.fa.toLowerCase()).includes(searchInput)
+            normalizeString(rock.name.en.toLowerCase()).includes(inputValue) || 
+            normalizeString(rock.name.fa.toLowerCase()).includes(inputValue)
         )
         .slice(0, 5);
 
@@ -212,7 +241,7 @@ function showSuggestions() {
             const suggestion = document.createElement("div");
             suggestion.textContent = rock.name[currentLanguage];
             suggestion.addEventListener("click", () => {
-                document.getElementById("searchInput").value = rock.name[currentLanguage];
+                searchInput.value = rock.name[currentLanguage];
                 suggestionsDiv.style.display = "none";
                 filterRocks();
             });
@@ -225,65 +254,90 @@ function showSuggestions() {
 }
 
 function resetFilters() {
-    document.getElementById("searchInput").value = "";
-    document.getElementById("hardnessMin").value = "";
-    document.getElementById("hardnessMax").value = "";
+    const searchInput = document.getElementById("searchInput");
+    const hardnessMin = document.getElementById("hardnessMin");
+    const hardnessMax = document.getElementById("hardnessMax");
+    const filteredRockList = document.getElementById("filteredRockList");
+    const suggestions = document.getElementById("suggestions");
+
+    if (searchInput) searchInput.value = "";
+    if (hardnessMin) hardnessMin.value = "";
+    if (hardnessMax) hardnessMax.value = "";
     document.querySelectorAll('.dropdown-content div').forEach(item => item.classList.remove('selected'));
-    document.getElementById("filteredRockList").innerHTML = "";
-    document.getElementById("suggestions").style.display = "none";
+    if (filteredRockList) filteredRockList.innerHTML = "";
+    if (suggestions) suggestions.style.display = "none";
+    localStorage.removeItem("searchFilters"); // حذف فیلترهای ذخیره‌شده
 }
 
 function showSection(sectionId) {
     document.querySelectorAll("section").forEach(section => {
         section.classList.remove("active");
     });
-    document.getElementById(sectionId).classList.add("active");
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.classList.add("active");
+        lastActiveSection = sectionId;
+        localStorage.setItem("lastSection", sectionId);
+    }
 
     if (sectionId === "rocks") displayRocks("rockList");
     if (sectionId === "search") {
-        document.getElementById("searchInput").focus();
+        const searchInput = document.getElementById("searchInput");
+        if (searchInput) searchInput.focus();
         updateFilters();
+
+        // بازسازی فیلترهای ذخیره‌شده
+        const savedFilters = JSON.parse(localStorage.getItem("searchFilters") || "{}");
+        if (savedFilters.searchInput) document.getElementById("searchInput").value = savedFilters.searchInput;
+        if (savedFilters.hardnessMin) document.getElementById("hardnessMin").value = savedFilters.hardnessMin;
+        if (savedFilters.hardnessMax) document.getElementById("hardnessMax").value = savedFilters.hardnessMax;
+
+        if (Object.keys(savedFilters).length > 0) filterRocks(); // اعمال فیلترها اگه چیزی ذخیره شده
     }
 }
 
 function toggleLanguageDropdown() {
     const languageList = document.getElementById("languageList");
-    languageList.classList.toggle("active");
+    if (languageList) languageList.classList.toggle("active");
 }
 
 function setLanguage(lang) {
     currentLanguage = lang;
-    document.getElementById("languageList").classList.remove("active");
-    document.getElementById("title").textContent = translations[currentLanguage].title;
-    document.getElementById("homeText").textContent = translations[currentLanguage].homeText;
-    document.getElementById("homeSubText").textContent = translations[currentLanguage].homeSubText;
-    document.getElementById("rocksTitle").textContent = translations[currentLanguage].rocksTitle;
-    document.getElementById("searchTitle").textContent = translations[currentLanguage].searchTitle;
-    document.getElementById("aboutTitle").textContent = translations[currentLanguage].aboutTitle;
-    document.getElementById("aboutText").textContent = translations[currentLanguage].aboutText;
-    document.getElementById("searchInput").placeholder = translations[currentLanguage].searchPlaceholder;
-    document.getElementById("searchBtn").textContent = translations[currentLanguage].searchBtn;
-    document.getElementById("resetBtn").textContent = translations[currentLanguage].resetBtn;
-    document.getElementById("hardnessLabel").textContent = translations[currentLanguage].hardnessRange;
-    document.getElementById("colorLabel").innerHTML = `${translations[currentLanguage].colorLabel} <span class="arrow">▼</span>`;
-    document.getElementById("locationLabel").innerHTML = `${translations[currentLanguage].locationLabel} <span class="arrow">▼</span>`;
-    document.getElementById("menuHome").innerHTML = `<span>🏠</span> ${translations[currentLanguage].menuHome}`;
-    document.getElementById("menuRocks").innerHTML = `<span>🪨</span> ${translations[currentLanguage].menuRocks}`;
-    document.getElementById("menuSearch").innerHTML = `<span>🔍</span> ${translations[currentLanguage].menuSearch}`;
-    document.getElementById("menuAbout").innerHTML = `<span>ℹ️</span> ${translations[currentLanguage].menuAbout}`;
-    document.body.classList.toggle("rtl", currentLanguage === "fa");
+    localStorage.setItem("language", lang);
+    const languageList = document.getElementById("languageList");
+    if (languageList) languageList.classList.remove("active");
+
+    document.getElementById("title").textContent = translations[lang].title;
+    document.getElementById("homeText").textContent = translations[lang].homeText;
+    document.getElementById("rocksTitle").textContent = translations[lang].rocksTitle;
+    document.getElementById("searchTitle").textContent = translations[lang].searchTitle;
+    document.getElementById("aboutTitle").textContent = translations[lang].aboutTitle;
+    document.getElementById("aboutText").textContent = translations[lang].aboutText;
+    document.getElementById("searchInput").placeholder = translations[lang].searchPlaceholder;
+    document.getElementById("searchBtn").textContent = translations[lang].searchBtn;
+    document.getElementById("resetBtn").textContent = translations[lang].resetBtn;
+    document.getElementById("hardnessLabel").textContent = translations[lang].hardnessRange;
+    document.getElementById("colorLabel").innerHTML = `${translations[lang].colorLabel} <span class="arrow">▼</span>`;
+    document.getElementById("locationLabel").innerHTML = `${translations[lang].locationLabel} <span class="arrow">▼</span>`;
+    document.getElementById("menuHome").innerHTML = `<span>🏠</span> ${translations[lang].menuHome}`;
+    document.getElementById("menuRocks").innerHTML = `<span>🪨</span> ${translations[lang].menuRocks}`;
+    document.getElementById("menuSearch").innerHTML = `<span>🔍</span> ${translations[lang].menuSearch}`;
+    document.getElementById("menuAbout").innerHTML = `<span>ℹ️</span> ${translations[lang].menuAbout}`;
+    document.querySelector(".explore-btn").textContent = translations[lang].exploreBtn;
+
+    document.body.classList.toggle("rtl", lang === "fa");
 
     if (document.getElementById("rocks").classList.contains("active")) displayRocks("rockList");
-    if (document.getElementById("search").classList.contains("active")) {
-        updateFilters();
-    }
+    if (document.getElementById("search").classList.contains("active")) updateFilters();
 }
 
 function toggleMenu() {
     const sidebar = document.getElementById("sidebar");
     const menuToggle = document.querySelector(".menu-toggle");
-    sidebar.classList.toggle("active");
-    menuToggle.classList.toggle("active");
+    if (sidebar && menuToggle) {
+        sidebar.classList.toggle("active");
+        menuToggle.classList.toggle("active");
+    }
 }
 
 function toggleTheme() {
@@ -293,47 +347,67 @@ function toggleTheme() {
 
 function toggleDropdown(dropdownId) {
     const dropdown = document.getElementById(dropdownId);
-    dropdown.classList.toggle("active");
-
-    document.querySelectorAll('.dropdown').forEach(otherDropdown => {
-        if (otherDropdown.id !== dropdownId) {
-            otherDropdown.classList.remove("active");
-        }
-    });
+    if (dropdown) {
+        dropdown.classList.toggle("active");
+        document.querySelectorAll('.dropdown').forEach(otherDropdown => {
+            if (otherDropdown.id !== dropdownId) otherDropdown.classList.remove("active");
+        });
+    }
 }
 
 document.addEventListener('click', (event) => {
     const dropdowns = document.querySelectorAll('.dropdown');
     dropdowns.forEach(dropdown => {
-        if (!dropdown.contains(event.target)) {
-            dropdown.classList.remove('active');
-        }
+        if (!dropdown.contains(event.target)) dropdown.classList.remove('active');
     });
-
     const suggestions = document.getElementById("suggestions");
-    if (!document.getElementById("searchInput").contains(event.target) && !suggestions.contains(event.target)) {
+    const searchInput = document.getElementById("searchInput");
+    if (suggestions && searchInput && !searchInput.contains(event.target) && !suggestions.contains(event.target)) {
         suggestions.style.display = "none";
     }
-
     const languageList = document.getElementById("languageList");
-    if (!document.querySelector(".language-btn").contains(event.target) && !languageList.contains(event.target)) {
+    const languageBtn = document.querySelector(".language-btn");
+    if (languageList && languageBtn && !languageBtn.contains(event.target) && !languageList.contains(event.target)) {
         languageList.classList.remove("active");
+    }
+
+    const sidebar = document.getElementById("sidebar");
+    const menuToggle = document.querySelector(".menu-toggle");
+    if (sidebar && menuToggle) {
+        const isClickInsideSidebar = sidebar.contains(event.target);
+        const isClickOnMenuToggle = menuToggle.contains(event.target);
+        if (!isClickInsideSidebar && !isClickOnMenuToggle && sidebar.classList.contains("active")) {
+            sidebar.classList.remove("active");
+            menuToggle.classList.remove("active");
+        }
     }
 });
 
-document.getElementById('colorLabel').addEventListener('click', (e) => {
+document.getElementById('colorLabel')?.addEventListener('click', (e) => {
     e.stopPropagation();
     toggleDropdown('colorFilter');
 });
 
-document.getElementById('locationLabel').addEventListener('click', (e) => {
+document.getElementById('locationLabel')?.addEventListener('click', (e) => {
     e.stopPropagation();
     toggleDropdown('locationFilter');
 });
 
-if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark-theme");
-    document.getElementById("themeSwitch").checked = true;
-}
+document.addEventListener("DOMContentLoaded", () => {
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-theme");
+        document.getElementById("themeSwitch").checked = true;
+    }
 
-showSection("home");
+    const savedLanguage = localStorage.getItem("language") || "en";
+    setLanguage(savedLanguage);
+
+    const hash = window.location.hash || `#${lastActiveSection}`;
+    const sectionId = hash.replace("#", "");
+    showSection(sectionId);
+});
+
+// اضافه کردن ذخیره‌سازی موقع تغییر ورودی‌ها
+document.getElementById("searchInput")?.addEventListener("input", saveFilterState);
+document.getElementById("hardnessMin")?.addEventListener("input", saveFilterState);
+document.getElementById("hardnessMax")?.addEventListener("input", saveFilterState);
