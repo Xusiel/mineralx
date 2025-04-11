@@ -109,11 +109,10 @@ function updateFilters() {
     document.querySelectorAll('.dropdown-content div').forEach(item => {
         item.addEventListener('click', () => {
             item.classList.toggle('selected');
-            saveFilterState(); // ذخیره حالت فیلترها بعد از تغییر
+            saveFilterState();
         });
     });
 
-    // بازسازی فیلترهای ذخیره‌شده
     const savedFilters = JSON.parse(localStorage.getItem("searchFilters") || "{}");
     if (savedFilters.colors) {
         savedFilters.colors.forEach(color => {
@@ -160,7 +159,7 @@ function displayRocks(containerId) {
         `;
         rockDiv.addEventListener("click", () => {
             localStorage.setItem("lastSection", lastActiveSection);
-            saveFilterState(); // ذخیره فیلترها قبل از رفتن
+            saveFilterState();
             window.location.href = `rock.html?id=${rock.name.en.toLowerCase()}`;
         });
         rockList.appendChild(rockDiv);
@@ -169,8 +168,8 @@ function displayRocks(containerId) {
 
 function filterRocks() {
     const searchInput = normalizeString(document.getElementById("searchInput")?.value.toLowerCase() || "");
-    const hardnessMin = parseInt(document.getElementById("hardnessMin")?.value) || 1;
-    const hardnessMax = parseInt(document.getElementById("hardnessMax")?.value) || 10;
+    const hardnessMin = document.getElementById("hardnessMin")?.value ? parseInt(document.getElementById("hardnessMin").value) : "";
+    const hardnessMax = document.getElementById("hardnessMax")?.value ? parseInt(document.getElementById("hardnessMax").value) : "";
     const colorFilter = Array.from(document.querySelectorAll('#colorFilter .dropdown-content .selected')).map(item => normalizeString(item.getAttribute('data-value')));
     const locationFilter = Array.from(document.querySelectorAll('#locationFilter .dropdown-content .selected')).map(item => normalizeString(item.getAttribute('data-value')));
     const filteredRockList = document.getElementById("filteredRockList");
@@ -178,10 +177,22 @@ function filterRocks() {
 
     filteredRockList.innerHTML = "";
 
+    // چک کن که حداقل یه فیلتر فعال باشه
+    const isFilterActive = searchInput !== "" || hardnessMin !== "" || hardnessMax !== "" || colorFilter.length > 0 || locationFilter.length > 0;
+
+    if (!isFilterActive) {
+        const noResults = document.createElement("p");
+        noResults.textContent = translations[currentLanguage].noResults;
+        noResults.style.textAlign = "center";
+        noResults.style.color = currentLanguage === "fa" ? "#bdc3c7" : "#555";
+        filteredRockList.appendChild(noResults);
+        return;
+    }
+
     const filtered = rocks.filter(rock => {
         const nameMatch = normalizeString(rock.name.en.toLowerCase()).includes(searchInput) || 
                           normalizeString(rock.name.fa.toLowerCase()).includes(searchInput);
-        const hardnessMatch = rock.hardness >= hardnessMin && rock.hardness <= hardnessMax;
+        const hardnessMatch = (!hardnessMin || rock.hardness >= hardnessMin) && (!hardnessMax || rock.hardness <= hardnessMax);
         const rockColors = splitColors(rock.color[currentLanguage]);
         const colorMatch = colorFilter.length === 0 || colorFilter.some(filterColor => rockColors.includes(filterColor));
         const rockLocations = splitColors(rock.location[currentLanguage]);
@@ -190,7 +201,7 @@ function filterRocks() {
         return nameMatch && hardnessMatch && colorMatch && locationMatch;
     });
 
-    saveFilterState(); // ذخیره فیلترها بعد از اعمال
+    saveFilterState();
 
     if (filtered.length === 0) {
         const noResults = document.createElement("p");
@@ -208,7 +219,7 @@ function filterRocks() {
             `;
             rockDiv.addEventListener("click", () => {
                 localStorage.setItem("lastSection", lastActiveSection);
-                saveFilterState(); // ذخیره فیلترها قبل از رفتن
+                saveFilterState();
                 window.location.href = `rock.html?id=${rock.name.en.toLowerCase()}`;
             });
             filteredRockList.appendChild(rockDiv);
@@ -266,7 +277,7 @@ function resetFilters() {
     document.querySelectorAll('.dropdown-content div').forEach(item => item.classList.remove('selected'));
     if (filteredRockList) filteredRockList.innerHTML = "";
     if (suggestions) suggestions.style.display = "none";
-    localStorage.removeItem("searchFilters"); // حذف فیلترهای ذخیره‌شده
+    localStorage.removeItem("searchFilters");
 }
 
 function showSection(sectionId) {
@@ -286,13 +297,17 @@ function showSection(sectionId) {
         if (searchInput) searchInput.focus();
         updateFilters();
 
-        // بازسازی فیلترهای ذخیره‌شده
         const savedFilters = JSON.parse(localStorage.getItem("searchFilters") || "{}");
         if (savedFilters.searchInput) document.getElementById("searchInput").value = savedFilters.searchInput;
         if (savedFilters.hardnessMin) document.getElementById("hardnessMin").value = savedFilters.hardnessMin;
         if (savedFilters.hardnessMax) document.getElementById("hardnessMax").value = savedFilters.hardnessMax;
 
-        if (Object.keys(savedFilters).length > 0) filterRocks(); // اعمال فیلترها اگه چیزی ذخیره شده
+        // فقط اگه فیلترها ذخیره شده باشن، نتایج رو نشون بده
+        if (savedFilters.searchInput || savedFilters.hardnessMin || savedFilters.hardnessMax || savedFilters.colors?.length || savedFilters.locations?.length) {
+            filterRocks();
+        } else {
+            document.getElementById("filteredRockList").innerHTML = ""; // خالی کردن نتایج موقع ورود
+        }
     }
 }
 
@@ -407,7 +422,6 @@ document.addEventListener("DOMContentLoaded", () => {
     showSection(sectionId);
 });
 
-// اضافه کردن ذخیره‌سازی موقع تغییر ورودی‌ها
 document.getElementById("searchInput")?.addEventListener("input", saveFilterState);
 document.getElementById("hardnessMin")?.addEventListener("input", saveFilterState);
 document.getElementById("hardnessMax")?.addEventListener("input", saveFilterState);
