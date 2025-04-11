@@ -12,7 +12,6 @@
             <h1>MineralX</h1>
         </div>
         <div class="controls">
-            <!-- دکمه تم با آیکن -->
             <div class="theme-toggle">
                 <input type="checkbox" id="themeSwitch" onchange="toggleTheme()">
                 <label for="themeSwitch" class="toggle-label">
@@ -20,7 +19,6 @@
                     <span class="moon-icon">🌙</span>
                 </label>
             </div>
-            <!-- دکمه زبان -->
             <div class="language-dropdown">
                 <button class="language-btn" onclick="toggleLanguageDropdown()">Language</button>
                 <div class="language-list" id="languageList">
@@ -47,9 +45,11 @@
 
     <main>
         <section id="home" class="active">
-            <h1 id="title">MineralX</h1>
-            <p id="homeText">Discover the fascinating world of minerals with MineralX!</p>
-            <p id="homeSubText" style="text-align: center; font-style: italic; color: #7f8c8d;">Unveil the beauty and science of Earth's mineral treasures.</p>
+            <div class="hero">
+                <h1 id="title">Welcome to MineralX</h1>
+                <p id="homeText">Explore the wonders of Earth's minerals with us!</p>
+                <button class="explore-btn" onclick="showSection('rocks')">Discover Rocks & Minerals</button>
+            </div>
         </section>
 
         <section id="rocks">
@@ -70,15 +70,11 @@
                     <input type="number" id="hardnessMax" min="1" max="10" placeholder="Max">
                     <div class="dropdown" id="colorFilter">
                         <button class="dropdown-btn" id="colorLabel">Color <span class="arrow">▼</span></button>
-                        <div class="dropdown-content">
-                            <!-- فیلترهای رنگ داینامیک اینجا پر می‌شه -->
-                        </div>
+                        <div class="dropdown-content"></div>
                     </div>
                     <div class="dropdown" id="locationFilter">
                         <button class="dropdown-btn" id="locationLabel">Location <span class="arrow">▼</span></button>
-                        <div class="dropdown-content">
-                            <!-- فیلترهای مکان داینامیک اینجا پر می‌شه -->
-                        </div>
+                        <div class="dropdown-content"></div>
                     </div>
                 </div>
                 <div class="filter-buttons">
