@@ -1318,45 +1318,50 @@ body.dark-theme .rock-detail-card .info #description {
 
 /* رسپانسیو */
 @media (max-width: 768px) {
-    /* بهبود فاصله‌گذاری‌ها و فونت‌ها */
+    /* تنظیم فونت پایه و خوانایی */
     body {
-        font-size: 14px; /* فونت پایه کوچکتر برای موبایل */
+        font-size: 16px; /* فونت پایه بزرگتر برای خوانایی بهتر */
+        line-height: 1.6;
     }
 
     h1 {
-        font-size: 1.8em; /* کمی کوچکتر برای موبایل */
+        font-size: 1.6em; /* کمی کوچکتر ولی خوانا */
     }
 
     h2 {
-        font-size: 1.4em;
+        font-size: 1.3em;
+    }
+
+    h3 {
+        font-size: 1.1em;
     }
 
     p {
-        font-size: 0.95em;
-        line-height: 1.7;
+        font-size: 0.9em;
+        line-height: 1.8;
     }
 
     /* هدر و منو */
     header {
-        padding: 10px 15px;
+        padding: 8px 12px;
     }
 
     .logo h1 {
-        font-size: 1.3em;
+        font-size: 1.2em;
     }
 
     .controls {
-        gap: 8px;
+        gap: 6px;
     }
 
     .language-btn {
-        padding: 6px 12px;
-        font-size: 14px;
+        padding: 5px 10px;
+        font-size: 0.9em;
     }
 
     #sidebar {
-        width: 220px;
-        right: -260px;
+        width: 200px;
+        right: -240px;
     }
 
     #sidebar.active {
@@ -1364,238 +1369,282 @@ body.dark-theme .rock-detail-card .info #description {
     }
 
     #sidebar ul li a {
-        padding: 10px 15px;
-        font-size: 14px;
+        padding: 8px 12px;
+        font-size: 0.9em;
     }
 
     /* صفحه اصلی */
     main {
-        margin: 15px;
-        padding: 10px;
-        border-radius: 10px;
+        margin: 10px;
+        padding: 8px;
+        border-radius: 8px;
     }
 
     .hero {
-        padding: 20px 10px;
-        min-height: 250px;
-        margin: 10px;
+        padding: 15px 8px;
+        min-height: 220px;
+        margin: 8px;
     }
 
     #title {
-        font-size: 1.8em;
+        font-size: 1.6em;
     }
 
     #homeText {
-        font-size: 1.1em;
+        font-size: 1em;
     }
 
     .explore-btn {
-        padding: 10px 20px;
-        font-size: 0.95em;
-        border-radius: 20px;
+        padding: 8px 16px;
+        font-size: 0.9em;
+        border-radius: 18px;
     }
 
     /* بهینه‌سازی اسلایدر برای موبایل */
     .featured-slider {
         max-width: 100%;
-        padding: 0 10px;
-        margin: 15px auto;
+        padding: 0 5px;
+        margin: 10px auto;
     }
 
     .slider-container {
-        height: 280px; /* ارتفاع کمتر برای موبایل */
-        gap: 0; /* حذف فاصله بین کانی‌ها */
-        overflow-x: auto; /* اسکرول افقی */
-        scroll-snap-type: x mandatory; /* اسکرول اسنپ برای توقف روی هر کانی */
+        height: 300px;
+        gap: 8px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch; /* اسکرول نرم تو iOS */
+        -webkit-overflow-scrolling: touch;
+        display: flex;
+        padding: 0 10px; /* برای اینکه کانی‌های کناری کمی دیده بشن */
     }
 
     .slider-item {
-        width: 100%; /* عرض کامل برای هر کانی */
-        max-width: 200px; /* حداکثر عرض */
-        margin: 0 5px; /* فاصله کم بین کانی‌ها */
-        scroll-snap-align: center; /* وسط‌چین شدن کانی‌ها موقع اسکرول */
-        opacity: 1; /* همه کانی‌ها واضح باشن */
-        transform: none; /* حذف انیمیشن مقیاس */
-        filter: none; /* حذف افکت بلور */
-    }
-
-    .slider-item.active,
-    .slider-item.adjacent {
-        opacity: 1; /* همه کانی‌ها تو موبایل واضح باشن */
+        width: 70%; /* عرض کمتر تا کانی‌های کناری دیده بشن */
+        max-width: 180px;
+        margin: 0 4px;
+        scroll-snap-align: center;
+        opacity: 1;
         transform: none;
         filter: none;
     }
 
-    /* غیرفعال کردن انیمیشن‌های ورود و خروج تو موبایل */
+    .slider-item.active,
+    .slider-item.adjacent {
+        opacity: 1;
+        transform: none;
+        filter: none;
+    }
+
+    /* غیرفعال کردن انیمیشن‌ها تو موبایل */
     .slider-item.slide-in-right,
     .slider-item.slide-out-left,
     .slider-item.slide-in-left,
     .slider-item.slide-out-right {
-        animation: none; /* انیمیشن‌ها تو موبایل غیرفعال بشن */
+        animation: none;
         transform: none;
     }
 
     .slider-item img {
-        width: 150px;
-        height: 150px;
-        border-radius: 15px; /* گوشه‌های نرم‌تر */
+        width: 140px;
+        height: 140px;
+        border-radius: 12px;
     }
 
     .slider-item h3 {
-        font-size: 1.1em;
-        margin: 8px 0;
+        font-size: 1em;
+        margin: 6px 0;
     }
 
     .slider-item p {
-        font-size: 0.85em;
-        max-width: 180px;
+        font-size: 0.8em;
+        max-width: 160px;
     }
 
     .slider-btn {
-        display: none; /* دکمه‌های قبلی/بعدی تو موبایل مخفی بشن */
+        display: none; /* دکمه‌ها تو موبایل نیازی نیست */
     }
 
-    /* کارت‌های Rocks & Minerals */
+    /* بخش سنگ‌ها و کانی‌ها */
     #rockList, #filteredRockList {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* کارت‌ها بزرگ‌تر بشن */
-        gap: 10px;
-        padding: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* ۲ کانی تو هر ردیف */
+        gap: 8px;
+        padding: 8px;
     }
 
     .rock-card-mini {
         width: 100%;
-        padding: 8px;
-        border-radius: 10px;
-    }
-
-    .rock-card-mini img {
-        width: 120px;
-        height: 120px;
+        padding: 6px;
         border-radius: 8px;
     }
 
+    .rock-card-mini img {
+        width: 110px;
+        height: 110px;
+        border-radius: 6px;
+    }
+
     .rock-card-mini h3 {
-        font-size: 0.95em;
-        margin: 5px 0 0;
+        font-size: 0.9em;
+        margin: 4px 0 0;
     }
 
     .rock-card {
-        padding: 12px;
+        padding: 10px;
         flex-direction: column;
-        border-radius: 10px;
+        border-radius: 8px;
     }
 
     .rock-card img {
         width: 100%;
-        height: 140px;
-        border-radius: 8px;
+        height: 130px;
+        border-radius: 6px;
     }
 
     .rock-card h2 {
-        font-size: 1.5em;
+        font-size: 1.4em;
     }
 
     .rock-card p {
-        font-size: 0.9em;
+        font-size: 0.85em;
     }
 
     /* بخش سرچ و فیلتر */
     .search-wrapper {
-        margin: 15px auto;
-        padding: 0 10px;
+        margin: 10px auto;
+        padding: 0 8px;
     }
 
     #searchInput {
-        padding: 12px;
-        font-size: 14px;
-        border-radius: 8px;
+        padding: 10px;
+        font-size: 0.9em;
+        border-radius: 6px;
     }
 
     .active-filters {
         flex-wrap: nowrap;
         overflow-x: auto;
         white-space: nowrap;
-        padding-bottom: 5px;
-        gap: 6px;
+        padding-bottom: 4px;
+        gap: 5px;
     }
 
     .filter-tag {
-        padding: 5px 10px;
-        font-size: 0.85em;
-        border-radius: 10px;
+        padding: 4px 8px;
+        font-size: 0.8em;
+        border-radius: 8px;
     }
 
     .filter-container {
-        padding: 15px;
-        margin: 15px auto;
-        border-radius: 10px;
+        padding: 12px;
+        margin: 10px auto;
+        border-radius: 8px;
     }
 
     .filter-options {
-        flex-direction: column;
-        gap: 12px;
-        align-items: stretch;
+        display: flex;
+        flex-direction: column; /* عمودی برای قرینگی */
+        gap: 10px;
+        align-items: center; /* وسط‌چین کردن */
+    }
+
+    /* تنظیم چیدمان قرینه برای فیلترها */
+    .filter-options label {
+        font-size: 0.9em;
+        margin-bottom: 4px;
+        width: 100%;
+        text-align: center;
     }
 
     .filter-options input[type="number"] {
-        width: 50px;
-        padding: 6px;
-        font-size: 14px;
-        border-radius: 6px;
+        width: 60px;
+        padding: 5px;
+        font-size: 0.9em;
+        border-radius: 5px;
+        margin: 0 5px;
+    }
+
+    .hardness-filter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .dropdown {
+        width: 100%;
+        max-width: 280px; /* عرض مناسب برای موبایل */
     }
 
     .dropdown-btn {
-        padding: 10px 20px;
-        font-size: 14px;
-        border-radius: 10px;
+        padding: 8px 16px;
+        font-size: 0.9em;
+        border-radius: 6px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .dropdown-content {
+        width: 100%;
+        max-height: 150px;
+        font-size: 0.85em;
+        border-radius: 6px;
+    }
+
+    .dropdown-content div {
+        padding: 6px 12px;
     }
 
     .filter-buttons {
+        display: flex;
+        justify-content: center;
         gap: 8px;
+        width: 100%;
+        margin-top: 10px;
     }
 
     #searchBtn,
     #resetBtn {
-        padding: 8px 16px;
-        font-size: 14px;
-        border-radius: 8px;
+        padding: 6px 14px;
+        font-size: 0.9em;
+        border-radius: 6px;
+        flex: 1;
+        max-width: 120px;
     }
 
     /* صفحه اختصاصی */
     .rock-detail-card {
         flex-direction: column;
-        padding: 12px;
-        margin: 15px auto;
-        border-radius: 10px;
+        padding: 10px;
+        margin: 10px auto;
+        border-radius: 8px;
     }
 
     .rock-detail-card img {
         width: 100%;
-        height: 200px;
-        border-radius: 8px;
+        height: 180px;
+        border-radius: 6px;
     }
 
     .rock-detail-card h1 {
-        font-size: 2em;
+        font-size: 1.8em;
     }
 
     .rock-detail-card .info #description {
-        font-size: 0.95em;
-        padding: 10px;
+        font-size: 0.9em;
+        padding: 8px;
     }
 
     .back-btn {
-        padding: 8px 16px;
-        font-size: 14px;
-        border-radius: 8px;
+        padding: 6px 14px;
+        font-size: 0.9em;
+        border-radius: 6px;
     }
 
     /* فوتر */
     footer {
-        padding: 12px;
-        font-size: 0.85em;
+        padding: 10px;
+        font-size: 0.8em;
     }
 }
 
