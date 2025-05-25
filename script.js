@@ -1,4 +1,6 @@
-let rocks = []; // آرایه خالی که با fetch پر می‌شه
+let rocks = [];
+let dailyRocks = []; // آرایه برای ۱۰ کانی رندوم
+let currentIndex = 0; // برای ردیابی کانی فعلی در اسلایدر
 
 const filterOptions = {
     colors: {
@@ -33,7 +35,9 @@ const translations = {
         menuRocks: "Rocks & Minerals",
         menuSearch: "Search & Filter",
         menuAbout: "About Us",
-        exploreBtn: "Discover Rocks & Minerals"
+        exploreBtn: "Discover Rocks & Minerals",
+        clearHistory: "Clear History",
+        sliderTitle: "Daily Featured Minerals"
     },
     fa: {
         title: "به MineralX خوش آمدید",
@@ -56,14 +60,15 @@ const translations = {
         menuRocks: "سنگ‌ها و کانی‌ها",
         menuSearch: "جستجو و فیلتر",
         menuAbout: "درباره ما",
-        exploreBtn: "کشف سنگ‌ها و کانی‌ها"
+        exploreBtn: "کشف سنگ‌ها و کانی‌ها",
+        clearHistory: "پاک کردن تاریخچه",
+        sliderTitle: "کانی‌های ویژه روز"
     }
 };
 
 let currentLanguage = localStorage.getItem("language") || "en";
 let lastActiveSection = localStorage.getItem("lastSection") || "home";
 
-// لود دیتا از rocks.json
 function loadRocksData() {
     fetch('rocks.json')
         .then(response => {
@@ -74,18 +79,137 @@ function loadRocksData() {
         })
         .then(data => {
             rocks = data;
-            console.log("Rocks loaded successfully:", rocks); // برای دیباگ
+            console.log("Rocks loaded successfully:", rocks);
             initializePage();
         })
         .catch(error => {
             console.error('Error loading rocks:', error);
-            // نمایش پیغام خطا تو صفحه
             const errorMessage = document.createElement("p");
             errorMessage.textContent = translations[currentLanguage].noResults || "Error loading data. Please try again.";
             errorMessage.style.textAlign = "center";
             errorMessage.style.color = "#e74c3c";
             document.getElementById("rockList")?.appendChild(errorMessage);
         });
+}
+
+function loadFeaturedSlider() {
+    const sliderContainer = document.getElementById("sliderContainer");
+    if (!sliderContainer || rocks.length === 0) {
+        console.warn("Slider container or rocks data not available.");
+        return;
+    }
+
+    // انتخاب ۱۰ کانی رندوم به صورت ایمن
+    dailyRocks = [];
+    const usedIndices = new Set();
+    while (dailyRocks.length < Math.min(10, rocks.length) && usedIndices.size < rocks.length) {
+        const randomIndex = Math.floor(Math.random() * rocks.length);
+        if (!usedIndices.has(randomIndex)) {
+            usedIndices.add(randomIndex);
+            dailyRocks.push(rocks[randomIndex]);
+        }
+    }
+
+    if (dailyRocks.length === 0) {
+        console.error("No rocks available to load into the slider.");
+        sliderContainer.innerHTML = `<p>${translations[currentLanguage].noResults || "No minerals available."}</p>`;
+        return;
+    }
+
+    currentIndex = 0; // شروع از اولین کانی
+
+    // پاکسازی اسلایدر قبل از بارگذاری اولیه
+    sliderContainer.innerHTML = "";
+
+    // ایجاد و اضافه کردن اسلایدها با انیمیشن اولیه
+    const prevIndex = (currentIndex - 1 + dailyRocks.length) % dailyRocks.length;
+    const nextIndex = (currentIndex + 1) % dailyRocks.length;
+
+    const prevRock = dailyRocks[prevIndex];
+    const currentRock = dailyRocks[currentIndex];
+    const nextRock = dailyRocks[nextIndex];
+
+    const prevSlide = createSlide(prevRock, "adjacent", "slide-in-right");
+    const currentSlide = createSlide(currentRock, "active", "slide-in-right");
+    const nextSlide = createSlide(nextRock, "adjacent", "slide-in-right");
+
+    // اضافه کردن اسلایدها به DOM
+    sliderContainer.appendChild(prevSlide);
+    sliderContainer.appendChild(currentSlide);
+    sliderContainer.appendChild(nextSlide);
+
+    // حذف کلاس انیمیشن بعد از اتمام (برای جلوگیری از تکرار)
+    setTimeout(() => {
+        prevSlide.classList.remove("slide-in-right");
+        currentSlide.classList.remove("slide-in-right");
+        nextSlide.classList.remove("slide-in-right");
+    }, 500); // مدت انیمیشن (0.5s)
+}
+
+function displayRocksInSlider(direction = "next") {
+    const sliderContainer = document.getElementById("sliderContainer");
+    if (!sliderContainer) return;
+
+    // ذخیره اسلایدهای فعلی برای انیمیشن خروج
+    const currentSlides = Array.from(sliderContainer.children);
+
+    // محاسبه اندیس‌های کانی‌های قبلی، فعلی، و بعدی (چرخه‌ای)
+    const prevIndex = (currentIndex - 1 + dailyRocks.length) % dailyRocks.length;
+    const nextIndex = (currentIndex + 1) % dailyRocks.length;
+
+    // ایجاد اسلایدهای جدید
+    const prevRock = dailyRocks[prevIndex];
+    const currentRock = dailyRocks[currentIndex];
+    const nextRock = dailyRocks[nextIndex];
+
+    const prevSlide = createSlide(prevRock, "adjacent", direction === "next" ? "slide-in-right" : "slide-in-left");
+    const currentSlide = createSlide(currentRock, "active", direction === "next" ? "slide-in-right" : "slide-in-left");
+    const nextSlide = createSlide(nextRock, "adjacent", direction === "next" ? "slide-in-right" : "slide-in-left");
+
+    // انیمیشن خروج برای اسلایدهای فعلی
+    currentSlides.forEach(slide => {
+        slide.classList.add(direction === "next" ? "slide-out-left" : "slide-out-right");
+    });
+
+    // اضافه کردن اسلایدهای جدید بعد از شروع انیمیشن خروج
+    setTimeout(() => {
+        sliderContainer.innerHTML = ""; // حذف اسلایدهای قبلی
+        sliderContainer.appendChild(prevSlide);
+        sliderContainer.appendChild(currentSlide);
+        sliderContainer.appendChild(nextSlide);
+    }, 250); // نصف زمان انیمیشن (برای همپوشانی)
+}
+
+function createSlide(rock, className, animationClass) {
+    const slide = document.createElement("div");
+    slide.className = `slider-item ${className} ${animationClass || ""}`;
+    const description = rock.description?.[currentLanguage]?.substring(0, 80) + (rock.description?.[currentLanguage]?.length > 80 ? "..." : "") || "";
+    slide.innerHTML = `
+        <img src="${rock.image}" alt="${rock.name[currentLanguage]}" onerror="this.src='https://via.placeholder.com/180?text=No+Image';">
+        <h3>${rock.name[currentLanguage]}</h3>
+        ${description ? `<p>${description}</p>` : ""}
+    `;
+    slide.addEventListener("click", () => {
+        localStorage.setItem("lastSection", lastActiveSection);
+        window.location.href = `rock.html?id=${rock.name.en.toLowerCase()}`;
+    });
+    return slide;
+}
+
+function setupSliderControls() {
+    const prevBtn = document.getElementById("sliderPrev");
+    const nextBtn = document.getElementById("sliderNext");
+    if (!prevBtn || !nextBtn) return;
+
+    prevBtn.addEventListener("click", () => {
+        currentIndex = (currentIndex - 1 + dailyRocks.length) % dailyRocks.length;
+        displayRocksInSlider("prev");
+    });
+
+    nextBtn.addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % dailyRocks.length;
+        displayRocksInSlider("next");
+    });
 }
 
 function initializePage() {
@@ -97,12 +221,69 @@ function initializePage() {
     const savedLanguage = localStorage.getItem("language") || "en";
     setLanguage(savedLanguage);
 
+    loadFeaturedSlider();
+    setupSliderControls();
+
     const hash = window.location.hash;
     const sectionId = hash ? hash.replace("#", "") : "home";
     showSection(sectionId);
+
+    const exploreBtn = document.getElementById("exploreBtn");
+    if (exploreBtn) {
+        exploreBtn.addEventListener("click", () => {
+            showSection("rocks");
+            window.location.hash = "#rocks";
+        });
+    }
+
+    const logo = document.querySelector(".logo");
+    if (logo) {
+        logo.addEventListener("click", () => {
+            showSection("home");
+            window.location.hash = "#home";
+        });
+    }
+
+    const menuItems = document.querySelectorAll("#sidebar ul li a");
+    menuItems.forEach(item => {
+        item.addEventListener("click", (e) => {
+            e.preventDefault();
+            const sectionId = item.getAttribute("href").replace("#", "");
+            showSection(sectionId);
+            window.location.hash = `#${sectionId}`;
+            toggleMenu();
+        });
+    });
+
+    const languageBtn = document.querySelector(".language-btn");
+    if (languageBtn) {
+        languageBtn.addEventListener("click", toggleLanguageDropdown);
+    }
+
+    const languageOptions = document.querySelectorAll(".language-option");
+    languageOptions.forEach(option => {
+        option.addEventListener("click", () => {
+            const lang = option.getAttribute("data-lang");
+            setLanguage(lang);
+        });
+    });
+
+    const menuToggle = document.querySelector(".menu-toggle");
+    if (menuToggle) {
+        menuToggle.addEventListener("click", toggleMenu);
+    }
+
+    const closeBtn = document.querySelector(".close-btn");
+    if (closeBtn) {
+        closeBtn.addEventListener("click", toggleMenu);
+    }
+
+    const themeSwitch = document.getElementById("themeSwitch");
+    if (themeSwitch) {
+        themeSwitch.addEventListener("change", toggleTheme);
+    }
 }
 
-// موقع لود صفحه، دیتا رو بخون
 document.addEventListener("DOMContentLoaded", () => {
     loadRocksData();
 });
@@ -114,6 +295,129 @@ function normalizeString(str) {
 function splitColors(str) {
     const normalized = str.replace(/[,،]/g, ",").trim();
     return normalizeString(normalized).split(",").map(color => normalizeString(color));
+}
+
+function saveSearchHistory(searchTerm) {
+    if (!searchTerm || searchTerm.trim() === "") return;
+    const normalizedTerm = normalizeString(searchTerm);
+    let history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
+    history = history.filter(term => term !== normalizedTerm);
+    history.unshift(normalizedTerm);
+    history = history.slice(0, 8);
+    localStorage.setItem("searchHistory", JSON.stringify(history));
+}
+
+function clearSearchHistory() {
+    localStorage.removeItem("searchHistory");
+    const historyDiv = document.getElementById("searchHistory");
+    if (historyDiv) {
+        historyDiv.innerHTML = "";
+        historyDiv.style.display = "none";
+    }
+}
+
+function showSearchHistory() {
+    const searchInput = document.getElementById("searchInput");
+    const historyDiv = document.getElementById("searchHistory");
+    const suggestionsDiv = document.getElementById("suggestions");
+    if (!searchInput || !historyDiv) return;
+
+    const history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
+    historyDiv.innerHTML = "";
+
+    if (history.length === 0 || searchInput.value.trim() !== "") {
+        historyDiv.style.display = "none";
+        return;
+    }
+
+    history.forEach(term => {
+        const historyItem = document.createElement("div");
+        historyItem.textContent = term;
+        historyItem.addEventListener("click", () => {
+            searchInput.value = term;
+            historyDiv.style.display = "none";
+            filterRocks();
+        });
+        historyDiv.appendChild(historyItem);
+    });
+
+    const clearItem = document.createElement("div");
+    clearItem.className = "clear-history";
+    clearItem.textContent = translations[currentLanguage].clearHistory;
+    clearItem.addEventListener("click", () => {
+        clearSearchHistory();
+    });
+    historyDiv.appendChild(clearItem);
+
+    historyDiv.style.display = "block";
+    suggestionsDiv.style.display = "none";
+}
+
+function displayActiveFilters() {
+    const activeFiltersDiv = document.getElementById("activeFilters");
+    if (!activeFiltersDiv) return;
+
+    activeFiltersDiv.innerHTML = "";
+    const savedFilters = JSON.parse(localStorage.getItem("searchFilters") || "{}");
+
+    if (savedFilters.searchInput) {
+        const tag = document.createElement("span");
+        tag.className = "filter-tag";
+        tag.innerHTML = `${savedFilters.searchInput} <span class="remove">×</span>`;
+        tag.addEventListener("click", () => {
+            document.getElementById("searchInput").value = "";
+            saveFilterState();
+            filterRocks();
+            displayActiveFilters();
+        });
+        activeFiltersDiv.appendChild(tag);
+    }
+
+    if (savedFilters.hardnessMin || savedFilters.hardnessMax) {
+        const tag = document.createElement("span");
+        tag.className = "filter-tag";
+        const min = savedFilters.hardnessMin || "1";
+        const max = savedFilters.hardnessMax || "10";
+        tag.innerHTML = `${translations[currentLanguage].hardnessLabel}: ${min}-${max} <span class="remove">×</span>`;
+        tag.addEventListener("click", () => {
+            document.getElementById("hardnessMin").value = "";
+            document.getElementById("hardnessMax").value = "";
+            saveFilterState();
+            filterRocks();
+            displayActiveFilters();
+        });
+        activeFiltersDiv.appendChild(tag);
+    }
+
+    savedFilters.colors?.forEach(color => {
+        const tag = document.createElement("span");
+        tag.className = "filter-tag";
+        tag.innerHTML = `${color} <span class="remove">×</span>`;
+        tag.addEventListener("click", () => {
+            const item = document.querySelector(`#colorFilter .dropdown-content div[data-value="${color}"]`);
+            if (item) item.classList.remove("selected");
+            saveFilterState();
+            filterRocks();
+            displayActiveFilters();
+        });
+        activeFiltersDiv.appendChild(tag);
+    });
+
+    savedFilters.locations?.forEach(location => {
+        const tag = document.createElement("span");
+        tag.className = "filter-tag";
+        tag.innerHTML = `${location} <span class="remove">×</span>`;
+        tag.addEventListener("click", () => {
+            const item = document.querySelector(`#locationFilter .dropdown-content div[data-value="${location}"]`);
+            if (item) item.classList.remove("selected");
+            saveFilterState();
+            filterRocks();
+            displayActiveFilters();
+        });
+        activeFiltersDiv.appendChild(tag);
+    });
+
+    activeFiltersDiv.style.display = activeFiltersDiv.children.length > 0 ? "flex" : "none";
 }
 
 function updateFilters() {
@@ -149,6 +453,7 @@ function updateFilters() {
             if (item) item.classList.add("selected");
         });
     }
+    displayActiveFilters();
 }
 
 function saveFilterState() {
@@ -166,6 +471,7 @@ function saveFilterState() {
         locations: locationFilter
     };
     localStorage.setItem("searchFilters", JSON.stringify(filterState));
+    displayActiveFilters();
 }
 
 function displayRocks(containerId) {
@@ -224,6 +530,8 @@ function filterRocks() {
     });
 
     saveFilterState();
+    if (searchInput) saveSearchHistory(searchInput);
+    displayActiveFilters();
 
     if (filtered.length === 0) {
         const noResults = document.createElement("p");
@@ -252,6 +560,7 @@ function filterRocks() {
 function showSuggestions() {
     const searchInput = document.getElementById("searchInput");
     const suggestionsDiv = document.getElementById("suggestions");
+    const historyDiv = document.getElementById("searchHistory");
     if (!searchInput || !suggestionsDiv) return;
 
     const inputValue = normalizeString(searchInput.value.toLowerCase());
@@ -259,6 +568,7 @@ function showSuggestions() {
 
     if (inputValue === "") {
         suggestionsDiv.style.display = "none";
+        showSearchHistory();
         return;
     }
 
@@ -281,6 +591,7 @@ function showSuggestions() {
             suggestionsDiv.appendChild(suggestion);
         });
         suggestionsDiv.style.display = "block";
+        historyDiv.style.display = "none";
     } else {
         suggestionsDiv.style.display = "none";
     }
@@ -292,6 +603,8 @@ function resetFilters() {
     const hardnessMax = document.getElementById("hardnessMax");
     const filteredRockList = document.getElementById("filteredRockList");
     const suggestions = document.getElementById("suggestions");
+    const history = document.getElementById("searchHistory");
+    const activeFilters = document.getElementById("activeFilters");
 
     if (searchInput) searchInput.value = "";
     if (hardnessMin) hardnessMin.value = "";
@@ -299,6 +612,8 @@ function resetFilters() {
     document.querySelectorAll('.dropdown-content div').forEach(item => item.classList.remove('selected'));
     if (filteredRockList) filteredRockList.innerHTML = "";
     if (suggestions) suggestions.style.display = "none";
+    if (history) history.style.display = "none";
+    if (activeFilters) activeFilters.style.display = "none";
     localStorage.removeItem("searchFilters");
 }
 
@@ -360,11 +675,16 @@ function setLanguage(lang) {
     document.getElementById("menuSearch").innerHTML = `<span>🔍</span> ${translations[lang].menuSearch}`;
     document.getElementById("menuAbout").innerHTML = `<span>ℹ️</span> ${translations[lang].menuAbout}`;
     document.querySelector(".explore-btn").textContent = translations[lang].exploreBtn;
+    document.getElementById("sliderTitle").textContent = translations[lang].sliderTitle;
 
     document.body.classList.toggle("rtl", lang === "fa");
 
     if (document.getElementById("rocks").classList.contains("active")) displayRocks("rockList");
-    if (document.getElementById("search").classList.contains("active")) updateFilters();
+    if (document.getElementById("search").classList.contains("active")) {
+        updateFilters();
+        displayActiveFilters();
+    }
+    loadFeaturedSlider();
 }
 
 function toggleMenu() {
@@ -397,9 +717,13 @@ document.addEventListener('click', (event) => {
         if (!dropdown.contains(event.target)) dropdown.classList.remove('active');
     });
     const suggestions = document.getElementById("suggestions");
+    const history = document.getElementById("searchHistory");
     const searchInput = document.getElementById("searchInput");
     if (suggestions && searchInput && !searchInput.contains(event.target) && !suggestions.contains(event.target)) {
         suggestions.style.display = "none";
+    }
+    if (history && searchInput && !searchInput.contains(event.target) && !history.contains(event.target)) {
+        history.style.display = "none";
     }
     const languageList = document.getElementById("languageList");
     const languageBtn = document.querySelector(".language-btn");
@@ -429,6 +753,34 @@ document.getElementById('locationLabel')?.addEventListener('click', (e) => {
     toggleDropdown('locationFilter');
 });
 
-document.getElementById("searchInput")?.addEventListener("input", saveFilterState);
-document.getElementById("hardnessMin")?.addEventListener("input", saveFilterState);
-document.getElementById("hardnessMax")?.addEventListener("input", saveFilterState);
+document.getElementById("searchInput")?.addEventListener("input", () => {
+    saveFilterState();
+    showSuggestions();
+});
+
+document.getElementById("searchInput")?.addEventListener("focus", showSearchHistory);
+
+document.getElementById("searchInput")?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        filterRocks();
+    }
+});
+
+document.getElementById("hardnessMin")?.addEventListener("input", () => {
+    saveFilterState();
+    displayActiveFilters();
+});
+
+document.getElementById("hardnessMax")?.addEventListener("input", () => {
+    saveFilterState();
+    displayActiveFilters();
+});
+
+document.getElementById("searchBtn")?.addEventListener("click", () => {
+    filterRocks();
+});
+
+document.getElementById("resetBtn")?.addEventListener("click", () => {
+    resetFilters();
+});
