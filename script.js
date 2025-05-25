@@ -153,26 +153,23 @@ function displayRocksInSlider(direction = "next") {
     // ذخیره اسلایدهای فعلی برای انیمیشن خروج
     const currentSlides = Array.from(sliderContainer.children);
 
+    // محاسبه اندیس‌های کانی‌های قبلی، فعلی، و بعدی (چرخه‌ای)
+    const prevIndex = (currentIndex - 1 + dailyRocks.length) % dailyRocks.length;
+    const nextIndex = (currentIndex + 1) % dailyRocks.length;
+
+    // ایجاد اسلایدهای جدید
+    const prevRock = dailyRocks[prevIndex];
+    const currentRock = dailyRocks[currentIndex];
+    const nextRock = dailyRocks[nextIndex];
+
+    const prevSlide = createSlide(prevRock, "adjacent", direction === "next" ? "slide-in-right" : "slide-in-left");
+    const currentSlide = createSlide(currentRock, "active", direction === "next" ? "slide-in-right" : "slide-in-left");
+    const nextSlide = createSlide(nextRock, "adjacent", direction === "next" ? "slide-in-right" : "slide-in-left");
+
     // انیمیشن خروج برای اسلایدهای فعلی
     currentSlides.forEach(slide => {
         slide.classList.add(direction === "next" ? "slide-out-left" : "slide-out-right");
     });
-
-    // ایجاد اسلایدهای جدید برای همه ۱۰ کانی
-    const newSlides = dailyRocks.map((rock, index) => {
-        const isActive = index === currentIndex;
-        const isAdjacent = index === (currentIndex - 1 + dailyRocks.length) % dailyRocks.length ||
-                          index === (currentIndex + 1) % dailyRocks.length;
-        const className = isActive ? "active" : (isAdjacent ? "adjacent" : "");
-        return createSlide(rock, className, direction === "next" ? "slide-in-right" : "slide-in-left");
-    });
-
-    // اضافه کردن اسلایدهای جدید بعد از شروع انیمیشن خروج
-    setTimeout(() => {
-        sliderContainer.innerHTML = ""; // حذف اسلایدهای قبلی
-        newSlides.forEach(slide => sliderContainer.appendChild(slide));
-    }, 250); // نصف زمان انیمیشن (برای همپوشانی)
-}
 
     // اضافه کردن اسلایدهای جدید بعد از شروع انیمیشن خروج
     setTimeout(() => {
