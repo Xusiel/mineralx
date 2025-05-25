@@ -4,41 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MineralX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <div class="logo" onclick="showSection('home')">
+        <div class="logo">
             <h1>MineralX</h1>
         </div>
         <div class="controls">
             <div class="theme-toggle">
-                <input type="checkbox" id="themeSwitch" onchange="toggleTheme()">
+                <input type="checkbox" id="themeSwitch">
                 <label for="themeSwitch" class="toggle-label">
                     <span class="sun-icon">☀️</span>
                     <span class="moon-icon">🌙</span>
                 </label>
             </div>
             <div class="language-dropdown">
-                <button class="language-btn" onclick="toggleLanguageDropdown()">Language</button>
+                <button class="language-btn">Language</button>
                 <div class="language-list" id="languageList">
-                    <div class="language-option" data-lang="en" onclick="setLanguage('en')">English</div>
-                    <div class="language-option" data-lang="fa" onclick="setLanguage('fa')">فارسی</div>
+                    <div class="language-option" data-lang="en">English</div>
+                    <div class="language-option" data-lang="fa">فارسی</div>
                 </div>
             </div>
-            <div class="menu-toggle" onclick="toggleMenu()">
+            <div class="menu-toggle">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
         </div>
         <nav id="sidebar">
-            <button class="close-btn" onclick="toggleMenu()">✖</button>
+            <button class="close-btn">✖</button>
             <ul>
-                <li><a href="#home" id="menuHome" onclick="showSection('home'); toggleMenu()"><span>🏠</span> Home</a></li>
-                <li><a href="#rocks" id="menuRocks" onclick="showSection('rocks'); toggleMenu()"><span>🪨</span> Rocks & Minerals</a></li>
-                <li><a href="#search" id="menuSearch" onclick="showSection('search'); toggleMenu()"><span>🔍</span> Search & Filter</a></li>
-                <li><a href="#about" id="menuAbout" onclick="showSection('about'); toggleMenu()"><span>ℹ️</span> About Us</a></li>
+                <li><a href="#home" id="menuHome"><span>🏠</span> Home</a></li>
+                <li><a href="#rocks" id="menuRocks"><span>🪨</span> Rocks & Minerals</a></li>
+                <li><a href="#search" id="menuSearch"><span>🔍</span> Search & Filter</a></li>
+                <li><a href="#about" id="menuAbout"><span>ℹ️</span> About Us</a></li>
             </ul>
         </nav>
     </header>
@@ -48,7 +49,13 @@
             <div class="hero">
                 <h1 id="title">Welcome to MineralX</h1>
                 <p id="homeText">Explore the wonders of Earth's minerals with us!</p>
-                <button class="explore-btn" onclick="showSection('rocks')">Discover Rocks & Minerals</button>
+                <button id="exploreBtn" class="explore-btn">Discover Rocks & Minerals</button>
+                <h2 id="sliderTitle">Daily Featured Minerals</h2> <!-- عنوان اختیاری برای کانی‌های روز -->
+                <div class="featured-slider">
+                    <div class="slider-container" id="sliderContainer"></div>
+                    <button class="slider-btn prev" id="sliderPrev">❮</button>
+                    <button class="slider-btn next" id="sliderNext">❯</button>
+                </div>
             </div>
         </section>
 
@@ -58,16 +65,18 @@
         </section>
 
         <section id="search">
-            <h2 id="searchTitle">Search & Filter</h2>
+            <h1 id="searchTitle">Search & Filter</h1>
+            <div class="search-wrapper">
+                <input type="text" id="searchInput" placeholder="Search by name...">
+                <div id="suggestions" class="suggestions"></div>
+                <div id="searchHistory" class="suggestions"></div>
+            </div>
+            <div class="active-filters" id="activeFilters"></div>
             <div class="filter-container">
-                <div class="search-wrapper">
-                    <input type="text" id="searchInput" placeholder="Search by name..." onkeyup="showSuggestions()">
-                    <div id="suggestions" class="suggestions"></div>
-                </div>
                 <div class="filter-options">
                     <label id="hardnessLabel">Hardness Range:</label>
-                    <input type="number" id="hardnessMin" min="1" max="10" placeholder="Min">
-                    <input type="number" id="hardnessMax" min="1" max="10" placeholder="Max">
+                    <input type="number" id="hardnessMin" placeholder="Min" min="1" max="10">
+                    <input type="number" id="hardnessMax" placeholder="Max" min="1" max="10">
                     <div class="dropdown" id="colorFilter">
                         <button class="dropdown-btn" id="colorLabel">Color <span class="arrow">▼</span></button>
                         <div class="dropdown-content"></div>
@@ -78,8 +87,8 @@
                     </div>
                 </div>
                 <div class="filter-buttons">
-                    <button id="searchBtn" onclick="filterRocks()">Search</button>
-                    <button id="resetBtn" onclick="resetFilters()">Reset Filters</button>
+                    <button id="searchBtn">Search</button>
+                    <button id="resetBtn">Reset Filters</button>
                 </div>
             </div>
             <div id="filteredRockList"></div>
