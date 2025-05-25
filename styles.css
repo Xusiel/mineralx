@@ -1318,14 +1318,14 @@ body.dark-theme .rock-detail-card .info #description {
 
 /* رسپانسیو */
 @media (max-width: 768px) {
-    /* تنظیم فونت‌ها */
+    /* تنظیم فونت‌ها و خوانایی متناسب با دسکتاپ */
     body {
-        font-size: 16px;
+        font-size: 16px; /* همون فونت دسکتاپ */
         line-height: 1.5;
     }
 
     h1 {
-        font-size: 2em;
+        font-size: 2em; /* همون اندازه دسکتاپ با مقیاس موبایل */
     }
 
     h2 {
@@ -1341,22 +1341,21 @@ body.dark-theme .rock-detail-card .info #description {
         line-height: 1.6;
     }
 
-    /* هدر بزرگتر */
+    /* هدر و منو */
     header {
-        padding: 15px 20px; /* بزرگتر کردن هدر */
-        height: 70px; /* ارتفاع بیشتر */
+        padding: 10px 15px;
     }
 
     .logo h1 {
-        font-size: 1.8em; /* لوگو بزرگتر */
+        font-size: 1.5em;
     }
 
     .controls {
-        gap: 12px;
+        gap: 10px;
     }
 
     .language-btn {
-        padding: 10px 18px;
+        padding: 8px 15px;
         font-size: 1em;
     }
 
@@ -1403,7 +1402,7 @@ body.dark-theme .rock-detail-card .info #description {
     .slider-container {
         height: 320px;
         gap: 15px;
-        overflow-x: hidden;
+        overflow-x: hidden; /* اسکرول افقی حذف بشه */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -1411,22 +1410,21 @@ body.dark-theme .rock-detail-card .info #description {
     }
 
     .slider-item {
-        width: 180px; /* کمی کوچکتر برای موبایل */
-        height: 180px;
-        border-radius: 50%; /* دایره‌ای شدن */
+        width: 200px;
+        height: 200px;
+        border-radius: 50%; /* دایره‌ای مثل دسکتاپ */
         margin: 0 10px;
-        opacity: 0.5;
-        transform: scale(0.9);
-        filter: blur(2px);
+        opacity: 0.5; /* کانی‌های کناری مات بشن */
+        transform: scale(0.9); /* کوچکتر شدن کانی‌های کناری */
+        filter: blur(2px); /* کمرنگ مثل دسکتاپ */
         transition: all 0.3s ease;
-        overflow: hidden; /* برای اطمینان از دایره‌ای بودن */
     }
 
     .slider-item.active {
         opacity: 1;
         transform: scale(1);
         filter: none;
-        z-index: 1;
+        z-index: 1; /* اولویت بالاتر برای کانی فعال */
     }
 
     .slider-item.adjacent {
@@ -1436,24 +1434,24 @@ body.dark-theme .rock-detail-card .info #description {
     }
 
     .slider-item img {
-        width: 100%;
-        height: 100%;
+        width: 180px;
+        height: 180px;
         border-radius: 50%;
-        object-fit: cover; /* تصویر کامل تو دایره جا بشه */
     }
 
     .slider-item h3 {
-        font-size: 1em;
+        font-size: 1.1em;
         margin: 8px 0;
     }
 
     .slider-item p {
-        font-size: 0.85em;
-        max-width: 160px;
+        font-size: 0.9em;
+        max-width: 180px;
     }
 
+    /* دکمه‌های شیک قبلی/بعدی */
     .slider-btn {
-        display: block;
+        display: block; /* دکمه‌ها برگردن */
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
@@ -1482,26 +1480,26 @@ body.dark-theme .rock-detail-card .info #description {
 
     /* بخش سنگ‌ها و کانی‌ها */
     #rockList, #filteredRockList {
-        grid-template-columns: repeat(3, minmax(90px, 1fr)); /* ۳ کانی با سایز کوچکتر */
-        gap: 8px;
-        padding: 8px;
+        grid-template-columns: repeat(3, minmax(100px, 1fr)); /* ۳ کانی تو هر ردیف */
+        gap: 10px;
+        padding: 10px;
     }
 
     .rock-card-mini {
         width: 100%;
-        padding: 4px;
-        border-radius: 6px;
+        padding: 6px;
+        border-radius: 8px;
     }
 
     .rock-card-mini img {
-        width: 80px; /* کوچکتر کردن تصویر */
-        height: 80px;
-        border-radius: 4px;
+        width: 90px;
+        height: 90px;
+        border-radius: 6px;
     }
 
     .rock-card-mini h3 {
-        font-size: 0.85em; /* متن کوچکتر */
-        margin: 3px 0 0;
+        font-size: 0.9em;
+        margin: 4px 0 0;
     }
 
     /* بخش سرچ و فیلتر */
@@ -1541,7 +1539,7 @@ body.dark-theme .rock-detail-card .info #description {
         display: flex;
         flex-direction: column;
         gap: 12px;
-        align-items: center;
+        align-items: center; /* قرینه و تو مرکز */
         justify-content: center;
     }
 
@@ -1549,7 +1547,15 @@ body.dark-theme .rock-detail-card .info #description {
         font-size: 1em;
         margin-bottom: 6px;
         width: 100%;
-        text-align: center; /* متن لیبل‌ها تو مرکز */
+        text-align: center;
+    }
+
+    .filter-options input[type="number"] {
+        width: 70px;
+        padding: 6px;
+        font-size: 1em;
+        border-radius: 6px;
+        margin: 0 5px;
     }
 
     .hardness-filter {
@@ -1560,17 +1566,9 @@ body.dark-theme .rock-detail-card .info #description {
         width: 100%;
     }
 
-    .filter-options input[type="number"] {
-        width: 60px; /* کوچکتر برای قرار گرفتن کنار هم */
-        padding: 6px;
-        font-size: 1em;
-        border-radius: 6px;
-        margin: 0 5px;
-    }
-
     .dropdown {
         width: 100%;
-        max-width: 300px;
+        max-width: 300px; /* عرض مناسب‌تر */
     }
 
     .dropdown-btn {
@@ -1586,14 +1584,10 @@ body.dark-theme .rock-detail-card .info #description {
         max-height: 180px;
         font-size: 0.9em;
         border-radius: 8px;
-        text-align: center; /* متن گزینه‌ها تو مرکز */
     }
 
     .dropdown-content div {
         padding: 8px 15px;
-        display: flex;
-        justify-content: center; /* گزینه‌ها تو مرکز */
-        align-items: center;
     }
 
     .filter-buttons {
