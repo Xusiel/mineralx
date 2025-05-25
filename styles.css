@@ -1318,99 +1318,284 @@ body.dark-theme .rock-detail-card .info #description {
 
 /* رسپانسیو */
 @media (max-width: 768px) {
+    /* بهبود فاصله‌گذاری‌ها و فونت‌ها */
+    body {
+        font-size: 14px; /* فونت پایه کوچکتر برای موبایل */
+    }
+
+    h1 {
+        font-size: 1.8em; /* کمی کوچکتر برای موبایل */
+    }
+
+    h2 {
+        font-size: 1.4em;
+    }
+
+    p {
+        font-size: 0.95em;
+        line-height: 1.7;
+    }
+
+    /* هدر و منو */
+    header {
+        padding: 10px 15px;
+    }
+
+    .logo h1 {
+        font-size: 1.3em;
+    }
+
+    .controls {
+        gap: 8px;
+    }
+
+    .language-btn {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+
+    #sidebar {
+        width: 220px;
+        right: -260px;
+    }
+
+    #sidebar.active {
+        right: 0;
+    }
+
+    #sidebar ul li a {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    /* صفحه اصلی */
+    main {
+        margin: 15px;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .hero {
+        padding: 20px 10px;
+        min-height: 250px;
+        margin: 10px;
+    }
+
+    #title {
+        font-size: 1.8em;
+    }
+
+    #homeText {
+        font-size: 1.1em;
+    }
+
+    .explore-btn {
+        padding: 10px 20px;
+        font-size: 0.95em;
+        border-radius: 20px;
+    }
+
+    /* بهینه‌سازی اسلایدر برای موبایل */
+    .featured-slider {
+        max-width: 100%;
+        padding: 0 10px;
+        margin: 15px auto;
+    }
+
+    .slider-container {
+        height: 280px; /* ارتفاع کمتر برای موبایل */
+        gap: 0; /* حذف فاصله بین کانی‌ها */
+        overflow-x: auto; /* اسکرول افقی */
+        scroll-snap-type: x mandatory; /* اسکرول اسنپ برای توقف روی هر کانی */
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch; /* اسکرول نرم تو iOS */
+    }
+
+    .slider-item {
+        width: 100%; /* عرض کامل برای هر کانی */
+        max-width: 200px; /* حداکثر عرض */
+        margin: 0 5px; /* فاصله کم بین کانی‌ها */
+        scroll-snap-align: center; /* وسط‌چین شدن کانی‌ها موقع اسکرول */
+        opacity: 1; /* همه کانی‌ها واضح باشن */
+        transform: none; /* حذف انیمیشن مقیاس */
+        filter: none; /* حذف افکت بلور */
+    }
+
+    .slider-item.active,
+    .slider-item.adjacent {
+        opacity: 1; /* همه کانی‌ها تو موبایل واضح باشن */
+        transform: none;
+        filter: none;
+    }
+
+    /* غیرفعال کردن انیمیشن‌های ورود و خروج تو موبایل */
+    .slider-item.slide-in-right,
+    .slider-item.slide-out-left,
+    .slider-item.slide-in-left,
+    .slider-item.slide-out-right {
+        animation: none; /* انیمیشن‌ها تو موبایل غیرفعال بشن */
+        transform: none;
+    }
+
+    .slider-item img {
+        width: 150px;
+        height: 150px;
+        border-radius: 15px; /* گوشه‌های نرم‌تر */
+    }
+
+    .slider-item h3 {
+        font-size: 1.1em;
+        margin: 8px 0;
+    }
+
+    .slider-item p {
+        font-size: 0.85em;
+        max-width: 180px;
+    }
+
+    .slider-btn {
+        display: none; /* دکمه‌های قبلی/بعدی تو موبایل مخفی بشن */
+    }
+
+    /* کارت‌های Rocks & Minerals */
+    #rockList, #filteredRockList {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* کارت‌ها بزرگ‌تر بشن */
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .rock-card-mini {
+        width: 100%;
+        padding: 8px;
+        border-radius: 10px;
+    }
+
+    .rock-card-mini img {
+        width: 120px;
+        height: 120px;
+        border-radius: 8px;
+    }
+
+    .rock-card-mini h3 {
+        font-size: 0.95em;
+        margin: 5px 0 0;
+    }
+
+    .rock-card {
+        padding: 12px;
+        flex-direction: column;
+        border-radius: 10px;
+    }
+
+    .rock-card img {
+        width: 100%;
+        height: 140px;
+        border-radius: 8px;
+    }
+
+    .rock-card h2 {
+        font-size: 1.5em;
+    }
+
+    .rock-card p {
+        font-size: 0.9em;
+    }
+
+    /* بخش سرچ و فیلتر */
+    .search-wrapper {
+        margin: 15px auto;
+        padding: 0 10px;
+    }
+
+    #searchInput {
+        padding: 12px;
+        font-size: 14px;
+        border-radius: 8px;
+    }
+
     .active-filters {
         flex-wrap: nowrap;
         overflow-x: auto;
         white-space: nowrap;
         padding-bottom: 5px;
+        gap: 6px;
     }
+
     .filter-tag {
-        flex-shrink: 0;
+        padding: 5px 10px;
+        font-size: 0.85em;
+        border-radius: 10px;
     }
-    #sidebar {
-        width: 200px;
-        right: -240px;
-    }
-    #sidebar.active {
-        right: 0;
-    }
-    .controls {
-        gap: 10px;
-    }
-    main {
-        margin: 20px;
+
+    .filter-container {
         padding: 15px;
+        margin: 15px auto;
+        border-radius: 10px;
     }
-    .hero {
-        padding: 30px 15px;
-        min-height: 300px;
-    }
-    #title {
-        font-size: 2em;
-    }
-    #homeText {
-        font-size: 1.2em;
-    }
-    .explore-btn {
-        padding: 12px 25px;
-        font-size: 1em;
-    }
-    .featured-slider {
-        max-width: 100%;
-        padding: 0 15px;
-    }
-    .slider-container {
-        height: 300px; /* ارتفاع کوچیک‌تر برای موبایل */
-        gap: 10px; /* فاصله کمتر بین کانی‌ها */
-    }
-    .slider-item {
-        width: 150px; /* عرض کوچیک‌تر برای موبایل */
-    }
-    .slider-item img {
-        width: 140px;
-        height: 140px;
-    }
-    .slider-item h3 {
-        font-size: 1.2em;
-    }
-    .rock-card {
-        padding: 15px;
-        flex-direction: column;
-    }
-    .rock-card img {
-        width: 100%;
-        height: 150px;
-    }
-    .rock-card-mini {
-        width: 100px;
-    }
-    .rock-card-mini img {
-        width: 80px;
-        height: 80px;
-    }
-    #rockList, #filteredRockList {
-        padding: 15px;
-    }
-    h1 {
-        font-size: 2em;
-    }
-    h2 {
-        font-size: 1.5em;
-    }
-    .logo h1 {
-        font-size: 1.5em;
-    }
-    .rock-detail-card {
-        flex-direction: column;
-        padding: 15px;
-    }
-    .rock-detail-card img {
-        width: 100%;
-        height: auto;
-    }
+
     .filter-options {
         flex-direction: column;
+        gap: 12px;
         align-items: stretch;
+    }
+
+    .filter-options input[type="number"] {
+        width: 50px;
+        padding: 6px;
+        font-size: 14px;
+        border-radius: 6px;
+    }
+
+    .dropdown-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+
+    .filter-buttons {
+        gap: 8px;
+    }
+
+    #searchBtn,
+    #resetBtn {
+        padding: 8px 16px;
+        font-size: 14px;
+        border-radius: 8px;
+    }
+
+    /* صفحه اختصاصی */
+    .rock-detail-card {
+        flex-direction: column;
+        padding: 12px;
+        margin: 15px auto;
+        border-radius: 10px;
+    }
+
+    .rock-detail-card img {
+        width: 100%;
+        height: 200px;
+        border-radius: 8px;
+    }
+
+    .rock-detail-card h1 {
+        font-size: 2em;
+    }
+
+    .rock-detail-card .info #description {
+        font-size: 0.95em;
+        padding: 10px;
+    }
+
+    .back-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+        border-radius: 8px;
+    }
+
+    /* فوتر */
+    footer {
+        padding: 12px;
+        font-size: 0.85em;
     }
 }
 
