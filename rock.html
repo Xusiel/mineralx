@@ -70,172 +70,176 @@
     </footer>
 
     <script>
-        let rocks = [];
+let rocks = [];
 
-        const translations = {
-            en: {
-                formulaLabel: "Chemical Formula",
-                hardnessLabel: "Hardness",
-                colorLabel: "Color",
-                locationLabel: "Location",
-                usageLabel: "Usage",
-                crystalSystemLabel: "Crystal System",
-                specificGravityLabel: "Specific Gravity",
-                lusterLabel: "Luster",
-                menuHome: "Home",
-                menuRocks: "Rocks & Minerals",
-                menuSearch: "Search & Filter",
-                menuAbout: "About Us",
-                backBtn: "Back",
-                notFound: "Rock Not Found",
-                errorLoading: "Error loading data"
-            },
-            fa: {
-                formulaLabel: "فرمول شیمیایی",
-                hardnessLabel: "سختی",
-                colorLabel: "رنگ",
-                locationLabel: "محل استخراج",
-                usageLabel: "کاربرد",
-                crystalSystemLabel: "سیستم تبلور",
-                specificGravityLabel: "وزن مخصوص",
-                lusterLabel: "جلا",
-                menuHome: "خانه",
-                menuRocks: "سنگ‌ها و کانی‌ها",
-                menuSearch: "جستجو و فیلتر",
-                menuAbout: "درباره ما",
-                backBtn: "بازگشت",
-                notFound: "کانی یافت نشد",
-                errorLoading: "خطا در بارگذاری داده‌ها"
+const translations = {
+    en: {
+        formulaLabel: "Chemical Formula",
+        hardnessLabel: "Hardness",
+        colorLabel: "Color",
+        locationLabel: "Location",
+        usageLabel: "Usage",
+        crystalSystemLabel: "Crystal System",
+        specificGravityLabel: "Specific Gravity",
+        lusterLabel: "Luster",
+        menuHome: "Home",
+        menuRocks: "Rocks & Minerals",
+        menuSearch: "Search & Filter",
+        menuAbout: "About Us",
+        backBtn: "Back",
+        notFound: "Rock Not Found",
+        errorLoading: "Error loading data",
+        descriptionFallback: "No description available for this mineral."
+    },
+    fa: {
+        formulaLabel: "فرمول شیمیایی",
+        hardnessLabel: "سختی",
+        colorLabel: "رنگ",
+        locationLabel: "محل استخراج",
+        usageLabel: "کاربرد",
+        crystalSystemLabel: "سیستم تبلور",
+        specificGravityLabel: "وزن مخصوص",
+        lusterLabel: "جلا",
+        menuHome: "خانه",
+        menuRocks: "سنگ‌ها و کانی‌ها",
+        menuSearch: "جستجو و فیلتر",
+        menuAbout: "درباره ما",
+        backBtn: "بازگشت",
+        notFound: "کانی یافت نشد",
+        errorLoading: "خطا در بارگذاری داده‌ها",
+        descriptionFallback: "توضیحاتی برای این کانی در دسترس نیست."
+    }
+};
+
+let currentLanguage = localStorage.getItem("language") || "en";
+
+function loadRocksData() {
+    fetch('rocks.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-        };
-
-        let currentLanguage = localStorage.getItem("language") || "en";
-
-        function loadRocksData() {
-            fetch('rocks.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    rocks = data;
-                    console.log("Rocks loaded successfully:", rocks);
-                    updatePageLanguage();
-                })
-                .catch(error => {
-                    console.error('Error loading rocks:', error);
-                    const debugMessage = document.getElementById("debugMessage");
-                    debugMessage.textContent = translations[currentLanguage].errorLoading;
-                    document.getElementById("rockName").textContent = translations[currentLanguage].notFound;
-                });
-        }
-
-        function updatePageLanguage() {
-            const rockId = new URLSearchParams(window.location.search).get('id');
-            const debugMessage = document.getElementById("debugMessage");
-            const rock = rockId ? rocks.find(r => r.name.en.toLowerCase() === rockId.toLowerCase()) : null;
-
-            if (rock) {
-                document.getElementById("rockName").textContent = rock.name[currentLanguage];
-                document.getElementById("rockImage").src = rock.image;
-                document.getElementById("rockImage").onerror = () => { this.src = 'https://via.placeholder.com/300?text=No+Image'; };
-                document.getElementById("rockFormula").textContent = rock.formula;
-                document.getElementById("rockHardness").textContent = rock.hardness;
-                document.getElementById("rockColor").textContent = rock.color[currentLanguage];
-                document.getElementById("rockLocation").textContent = rock.location[currentLanguage];
-                document.getElementById("rockUsage").textContent = rock.usage[currentLanguage];
-                document.getElementById("rockCrystalSystem").textContent = rock.crystalSystem[currentLanguage];
-                document.getElementById("rockSpecificGravity").textContent = rock.specificGravity;
-                document.getElementById("rockLuster").textContent = rock.luster[currentLanguage];
-                document.getElementById("description").textContent = currentLanguage === "en" 
-                    ? `This is a detailed description of ${rock.name.en}.`
-                    : `این توضیحات مفصلی درباره ${rock.name.fa} است.`;
-                debugMessage.textContent = "";
-            } else {
-                document.getElementById("rockName").textContent = translations[currentLanguage].notFound;
-                debugMessage.textContent = rockId ? `No rock found with ID: ${rockId}` : "No 'id' parameter in URL";
-            }
-
-            document.getElementById("formulaLabel").textContent = translations[currentLanguage].formulaLabel + ":";
-            document.getElementById("hardnessLabel").textContent = translations[currentLanguage].hardnessLabel + ":";
-            document.getElementById("colorLabel").textContent = translations[currentLanguage].colorLabel + ":";
-            document.getElementById("locationLabel").textContent = translations[currentLanguage].locationLabel + ":";
-            document.getElementById("usageLabel").textContent = translations[currentLanguage].usageLabel + ":";
-            document.getElementById("crystalSystemLabel").textContent = translations[currentLanguage].crystalSystemLabel + ":";
-            document.getElementById("specificGravityLabel").textContent = translations[currentLanguage].specificGravityLabel + ":";
-            document.getElementById("lusterLabel").textContent = translations[currentLanguage].lusterLabel + ":";
-            document.getElementById("menuHome").innerHTML = `<span>🏠</span> ${translations[currentLanguage].menuHome}`;
-            document.getElementById("menuRocks").innerHTML = `<span>🪨</span> ${translations[currentLanguage].menuRocks}`;
-            document.getElementById("menuSearch").innerHTML = `<span>🔍</span> ${translations[currentLanguage].menuSearch}`;
-            document.getElementById("menuAbout").innerHTML = `<span>ℹ️</span> ${translations[currentLanguage].menuAbout}`;
-            document.querySelector(".back-btn").textContent = translations[currentLanguage].backBtn;
-
-            document.body.classList.toggle("rtl", currentLanguage === "fa");
-        }
-
-        function setLanguage(lang) {
-            currentLanguage = lang;
-            localStorage.setItem("language", lang);
-            document.getElementById("languageList").classList.remove("active");
+            return response.json();
+        })
+        .then(data => {
+            rocks = data;
+            console.log("Rocks loaded successfully:", rocks);
             updatePageLanguage();
-        }
-
-        function toggleTheme() {
-            document.body.classList.toggle("dark-theme");
-            localStorage.setItem("theme", document.body.classList.contains("dark-theme") ? "dark" : "light");
-        }
-
-        function toggleLanguageDropdown() {
-            document.getElementById("languageList").classList.toggle("active");
-        }
-
-        function toggleMenu() {
-            const sidebar = document.getElementById("sidebar");
-            const menuToggle = document.querySelector(".menu-toggle");
-            if (sidebar && menuToggle) {
-                sidebar.classList.toggle("active");
-                menuToggle.classList.toggle("active");
-            }
-        }
-
-        function goBack() {
-            const lastSection = localStorage.getItem("lastSection") || "home";
-            window.location.href = `index.html#${lastSection}`;
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            if (localStorage.getItem("theme") === "dark") {
-                document.body.classList.add("dark-theme");
-                document.getElementById("themeSwitch").checked = true;
-            }
-            loadRocksData();
+        })
+        .catch(error => {
+            console.error('Error loading rocks:', error);
+            const debugMessage = document.getElementById("debugMessage");
+            debugMessage.textContent = translations[currentLanguage].errorLoading;
+            document.getElementById("rockName").textContent = translations[currentLanguage].notFound;
         });
+}
 
-        document.addEventListener('click', (event) => {
-            const sidebar = document.getElementById("sidebar");
-            const menuToggle = document.querySelector(".menu-toggle");
-            const languageList = document.getElementById("languageList");
-            const languageBtn = document.querySelector(".language-btn");
+function updatePageLanguage() {
+    const rockId = new URLSearchParams(window.location.search).get('id');
+    const debugMessage = document.getElementById("debugMessage");
+    const rock = rockId ? rocks.find(r => r.name.en.toLowerCase() === rockId.toLowerCase()) : null;
 
-            if (sidebar && menuToggle) {
-                const isClickInsideSidebar = sidebar.contains(event.target);
-                const isClickOnMenuToggle = menuToggle.contains(event.target);
-                if (!isClickInsideSidebar && !isClickOnMenuToggle && sidebar.classList.contains("active")) {
-                    sidebar.classList.remove("active");
-                    menuToggle.classList.remove("active");
-                }
-            }
+    if (rock) {
+        document.getElementById("rockName").textContent = rock.name[currentLanguage];
+        document.getElementById("rockImage").src = rock.image;
+        document.getElementById("rockImage").onerror = () => { this.src = 'https://via.placeholder.com/300?text=No+Image'; };
+        document.getElementById("rockFormula").textContent = rock.formula || "N/A";
+        document.getElementById("rockHardness").textContent = rock.hardness || "N/A";
+        document.getElementById("rockColor").textContent = rock.color[currentLanguage] || "N/A";
+        document.getElementById("rockLocation").textContent = rock.location[currentLanguage] || "N/A";
+        document.getElementById("rockUsage").textContent = rock.usage[currentLanguage] || "N/A";
+        document.getElementById("rockCrystalSystem").textContent = rock.crystalSystem[currentLanguage] || "N/A";
+        document.getElementById("rockSpecificGravity").textContent = rock.specificGravity || "N/A";
+        document.getElementById("rockLuster").textContent = rock.luster[currentLanguage] || "N/A";
+        // لود توضیحات از rocks.json یا متن پیش‌فرض
+        document.getElementById("description").textContent = rock.description 
+            ? rock.description[currentLanguage] 
+            : translations[currentLanguage].descriptionFallback;
+        debugMessage.textContent = "";
+    } else {
+        document.getElementById("rockName").textContent = translations[currentLanguage].notFound;
+        document.getElementById("description").textContent = translations[currentLanguage].descriptionFallback;
+        debugMessage.textContent = rockId ? `No rock found with ID: ${rockId}` : "No 'id' parameter in URL";
+    }
 
-            if (languageList && languageBtn) {
-                const isClickInsideLanguageList = languageList.contains(event.target);
-                const isClickOnLanguageBtn = languageBtn.contains(event.target);
-                if (!isClickInsideLanguageList && !isClickOnLanguageBtn && languageList.classList.contains("active")) {
-                    languageList.classList.remove("active");
-                }
-            }
-        });
-    </script>
+    document.getElementById("formulaLabel").textContent = translations[currentLanguage].formulaLabel + ":";
+    document.getElementById("hardnessLabel").textContent = translations[currentLanguage].hardnessLabel + ":";
+    document.getElementById("colorLabel").textContent = translations[currentLanguage].colorLabel + ":";
+    document.getElementById("locationLabel").textContent = translations[currentLanguage].locationLabel + ":";
+    document.getElementById("usageLabel").textContent = translations[currentLanguage].usageLabel + ":";
+    document.getElementById("crystalSystemLabel").textContent = translations[currentLanguage].crystalSystemLabel + ":";
+    document.getElementById("specificGravityLabel").textContent = translations[currentLanguage].specificGravityLabel + ":";
+    document.getElementById("lusterLabel").textContent = translations[currentLanguage].lusterLabel + ":";
+    document.getElementById("menuHome").innerHTML = `<span>🏠</span> ${translations[currentLanguage].menuHome}`;
+    document.getElementById("menuRocks").innerHTML = `<span>🪨</span> ${translations[currentLanguage].menuRocks}`;
+    document.getElementById("menuSearch").innerHTML = `<span>🔍</span> ${translations[currentLanguage].menuSearch}`;
+    document.getElementById("menuAbout").innerHTML = `<span>ℹ️</span> ${translations[currentLanguage].menuAbout}`;
+    document.querySelector(".back-btn").textContent = translations[currentLanguage].backBtn;
+
+    document.body.classList.toggle("rtl", currentLanguage === "fa");
+}
+
+function setLanguage(lang) {
+    currentLanguage = lang;
+    localStorage.setItem("language", lang);
+    document.getElementById("languageList").classList.remove("active");
+    updatePageLanguage();
+}
+
+function toggleTheme() {
+    document.body.classList.toggle("dark-theme");
+    localStorage.setItem("theme", document.body.classList.contains("dark-theme") ? "dark" : "light");
+}
+
+function toggleLanguageDropdown() {
+    document.getElementById("languageList").classList.toggle("active");
+}
+
+function toggleMenu() {
+    const sidebar = document.getElementById("sidebar");
+    const menuToggle = document.querySelector(".menu-toggle");
+    if (sidebar && menuToggle) {
+        sidebar.classList.toggle("active");
+        menuToggle.classList.toggle("active");
+    }
+}
+
+function goBack() {
+    const lastSection = localStorage.getItem("lastSection") || "home";
+    window.location.href = `index.html#${lastSection}`;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-theme");
+        document.getElementById("themeSwitch").checked = true;
+    }
+    loadRocksData();
+});
+
+document.addEventListener('click', (event) => {
+    const sidebar = document.getElementById("sidebar");
+    const menuToggle = document.querySelector(".menu-toggle");
+    const languageList = document.getElementById("languageList");
+    const languageBtn = document.querySelector(".language-btn");
+
+    if (sidebar && menuToggle) {
+        const isClickInsideSidebar = sidebar.contains(event.target);
+        const isClickOnMenuToggle = menuToggle.contains(event.target);
+        if (!isClickInsideSidebar && !isClickOnMenuToggle && sidebar.classList.contains("active")) {
+            sidebar.classList.remove("active");
+            menuToggle.classList.remove("active");
+        }
+    }
+
+    if (languageList && languageBtn) {
+        const isClickInsideLanguageList = languageList.contains(event.target);
+        const isClickOnLanguageBtn = languageBtn.contains(event.target);
+        if (!isClickInsideLanguageList && !isClickOnLanguageBtn && languageList.classList.contains("active")) {
+            languageList.classList.remove("active");
+        }
+    }
+});
+</script>
 </body>
 </html>
