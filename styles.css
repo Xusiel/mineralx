@@ -1353,265 +1353,273 @@ body.dark-theme .rock-detail-card .info #description {
 /* فقط بخش تغییر یافته یا اضافه شده در @media (max-width: 768px) */
 
 @media (max-width: 768px) {
-    /* ... (سایر استایل های موبایل که قبلا بودند و تغییر نکرده اند) ... */
+    body {
+        font-size: 15px; /* کاهش جزئی فونت پایه برای موبایل */
+        line-height: 1.5;
+    }
 
-    /* ----- شروع تغییرات مجدد اسلایدر برای موبایل (به خصوص حالت عمودی) ----- */
+    h1 { /* عنوان های اصلی بخش ها */
+        font-size: 1.8em; /* کمی کوچکتر */
+    }
+
+    .rock-detail-card h1 { 
+        font-size: 1.6em; 
+    }
+
+    h2 { /* زیر عنوان ها */
+        font-size: 1.4em; /* کمی کوچکتر */
+    }
+
+    h3 { /* عنوان کارت های کوچک و اسلایدر */
+        font-size: 1.1em; /* کمی کوچکتر */
+    }
+
+    p {
+        font-size: 0.95em; /* کمی کوچکتر */
+        line-height: 1.55;
+    }
+
+    /* ----- تغییرات هدر برای موبایل ----- */
+    header {
+        padding: 8px 12px; /* کاهش پدینگ هدر */
+    }
+
+    .logo h1 {
+        font-size: 1.4em; /* کوچک کردن لوگو */
+    }
+
+    .controls {
+        gap: 8px; /* کاهش فاصله بین کنترل ها */
+    }
+
+    .language-btn {
+        padding: 6px 10px; 
+        font-size: 0.85em;  
+    }
+
+    .menu-toggle { /* برای جلوگیری از فشردگی دکمه منو */
+        width: 35px;
+        height: 28px;
+        padding: 4px;
+    }
+    .menu-toggle span {
+        height: 3px;
+    }
+    .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+    .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -7px); }
+
+
+    #sidebar {
+        width: 200px; 
+        right: -220px; 
+    }
+     /* ----- پایان تغییرات هدر برای موبایل ----- */
+
+
+    main {
+        margin: 10px; /* کاهش مارجین */
+        padding: 10px; /* کاهش پدینگ */
+    }
+    
+    section { 
+        padding: 10px; /* کاهش پدینگ بخش ها */
+    }
+
+    .hero {
+        padding: 20px 10px; 
+        margin: 0 0 10px 0; 
+    }
+    
+    #title { 
+        font-size: 2em; 
+    }
+
+    #homeText { 
+        font-size: 1em;
+    }
+
+    .explore-btn {
+        padding: 10px 20px; 
+        font-size: 0.95em;
+    }
+
+    /* ----- شروع بهینه‌سازی مجدد اسلایدر برای موبایل (خصوصا عمودی) ----- */
     .featured-slider {
-        /* padding: 0; /* اگر قبلا 0 بوده، دست نخورده */
-        /* margin: 15px auto; /* اگر قبلا 15px بوده، دست نخورده */
+        margin: 15px auto; 
     }
 
     .slider-container {
-        /* height: auto; /* اگر قبلا auto بوده */
-        /* padding: 20px 0; /* اگر قبلا بوده */
-        gap: 5px; /* کاهش بیشتر فاصله بین آیتم ها برای فضاهای خیلی باریک */
-        overflow: hidden; /* اطمینان از اینکه محتوای اضافی قطع میشود */
-        /* display: flex; /* از قبل بود */
-        /* align-items: center; /* از قبل بود */
-        /* position: relative; /* از قبل بود */
+        gap: 5px; 
+        padding: 15px 0; /* پدینگ عمودی برای فضا دادن */
+        /* overflow: hidden; /* باید فعال باشد */
     }
 
     .slider-item {
-        width: 130px; /* کاهش بیشتر عرض آیتم اصلی اسلاید */
-        padding: 8px; /* کاهش پدینگ داخلی آیتم */
-        margin: 0 2px; /* کاهش مارجین افقی آیتم برای جا شدن بهتر */
-        /* border-radius: 12px; /* از قبل بود */
-        /* height: auto; /* از قبل بود */
-        /* opacity, transform, filter از استایل های قبلی موبایل می آیند */
-        /* transition از استایل های قبلی موبایل می آید */
+        width: 110px; /* کوچکترین عرض معقول برای آیتم */
+        padding: 8px; 
+        margin: 0 3px; 
+        border-radius: 10px; /* گردی کمتر */
+        display: flex; /* برای کنترل بهتر محتوای داخلی */
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start; /* محتوا از بالا شروع شود */
+        min-height: 190px; /* یک ارتفاع حداقلی برای جلوگیری از بهم ریختگی */
     }
 
     .slider-item img {
-        width: 90px;  /* کاهش بیشتر اندازه عکس */
-        height: 90px; /* کاهش بیشتر اندازه عکس */
-        /* border-radius: 50%; /* از قبل بود */
-        margin-bottom: 8px; /* کاهش فاصله عکس از عنوان */
+        width: 75px;  /* باز هم کوچکتر کردن عکس */
+        height: 75px; 
+        margin-bottom: 5px; /* فاصله کمتر عکس از عنوان */
     }
 
     .slider-item h3 {
-        font-size: 0.9em; /* کاهش بیشتر فونت عنوان کانی */
-        margin: 4px 0;
-        min-height: 2.7em; /* تقریبا سه خط فضا بگیرد، متناسب با فونت جدید */
+        font-size: 0.85em; /* فونت عنوان کانی در اسلایدر */
+        margin: 5px 0;
+        line-height: 1.2; /* برای جلوگیری از ارتفاع زیاد در عناوین طولانی */
+        min-height: 2em; /* حداقل فضا برای دو خط */
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* محدود به دو خط */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
-    .slider-item p {
-        font-size: 0.75em; /* کاهش بیشتر فونت توضیحات */
-        min-height: 2.25em; /* تقریبا سه خط فضا بگیرد، متناسب با فونت جدید */
-        /* -webkit-line-clamp: 2; /* محدود به دو خط، اگر خوب نبود میتوان به ۳ تغییر داد */
-        /* سایر استایل های مربوط به چند خطی شدن و ... از قبل بودند */
+    .slider-item p { /* توضیحات اسلایدر */
+        font-size: 0.7em; 
+        display: none; /* در حالت عمودی و خیلی باریک، توضیحات را حذف می کنیم تا فضا باز شود */
+                         /* اگر میخواهید نمایش داده شود، این خط را حذف کنید و min-height تنظیم کنید */
     }
     
+    /* اگر هنوز توضیحات در اسلایدر موبایل نمایش داده می شود و میخواهید باشد: */
+    /*
+    .slider-item p {
+        font-size: 0.7em;
+        min-height: 2.1em; 
+        line-height: 1.4;
+        -webkit-line-clamp: 2;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    */
+
     .slider-item.active {
-        /* opacity: 1; transform: scale(1); filter: none; z-index: 1; /* از قبل بود */
-        /* ممکن است نیاز باشد scale را کمی کمتر کنیم اگر هنوز بزرگ است */
-        /* transform: scale(0.95); */ /* مثال */
+        transform: scale(1); /* آیتم فعال بدون تغییر مقیاس زیاد */
     }
 
     .slider-item.adjacent {
-        transform: scale(0.75); /* کاهش بیشتر مقیاس آیتم های کناری */
-        opacity: 0.5; /* شفافیت آیتم های کناری */
-        filter: blur(1.5px); /* کمی مات شدن بیشتر */
+        transform: scale(0.7); /* آیتم های کناری بسیار کوچکتر و محوتر */
+        opacity: 0.4; 
+        filter: blur(1px);
     }
     
     .slider-btn {
-        /* background: rgba(50, 50, 50, 0.5); /* از تغییر قبلی */
-        /* color: #fff; /* از تغییر قبلی */
-        /* border: 1px solid rgba(255, 255, 255, 0.3); /* از تغییر قبلی */
-        width: 32px; /* باز هم کمی کوچکتر */
-        height: 32px; /* باز هم کمی کوچکتر */
-        font-size: 0.9em; /* فونت آیکون کوچکتر */
-        /* z-index: 5; /* از تغییر قبلی */
+        width: 30px; 
+        height: 30px; 
+        font-size: 0.8em; 
+        background: rgba(0, 0, 0, 0.4); /* کمی شفافیت کمتر برای دیده شدن روی تصاویر مختلف */
+        border: none;
     }
 
     #sliderPrev {
-        left: 2px; /* باز هم نزدیکتر به لبه */
+        left: 3px; 
     }
 
     #sliderNext {
-        right: 2px; /* باز هم نزدیکتر به لبه */
+        right: 3px; 
     }
-    /* ----- پایان تغییرات مجدد اسلایدر برای موبایل ----- */
+    /* ----- پایان بهینه‌سازی مجدد اسلایدر ----- */
 
-    /* ... (سایر استایل های موبایل برای بخش کانی ها و فیلتر که قبلا بودند و تغییر نکرده اند) ... */
 
-    /* ----- بخش کانی ها و سنگ ها (اطمینان از پدینگ مناسب برای "برد پشتی") ----- */
-    #rocks, #search { 
-        padding: 10px; /* پدینگ یکنواخت برای بخش */
-    }
-
+    /* ----- بخش کانی ها و سنگ ها ----- */
     #rockList, #filteredRockList {
-        /* grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* این انعطاف پذیر است */
-        /* gap: 10px; /* از قبل بود */
-        padding: 5px 0; /* کمی پدینگ عمودی برای گرید، بدون پدینگ افقی */
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); /* کوچکترین اندازه کارت ۹۰ پیکسل */
+        gap: 8px; /* فاصله کمتر */
     }
 
     .rock-card-mini {
-        /* width: 100%; /* از قبل بود */
-        padding: 8px; 
-        /* سایر استایل های کارت کوچک بدون تغییر فرض می شوند مگر اینکه مشکل خاصی گزارش شود */
+        padding: 6px; 
     }
     
-    .rock-card-mini h3 {
-        font-size: 0.8em; /* اگر نیاز به کوچک شدن بیشتر است */
-        min-height: auto; /* ارتفاع خودکار شود تا با متن هماهنگ باشد */
-        line-height: 1.3; /* برای خوانایی بهتر عناوین چند کلمه ای */
+    .rock-card-mini img {
+        width: 70px; 
+        height: 70px;
     }
 
-    /* ----- بخش سرچ و فیلتر (اطمینان از قرینگی و مرتب بودن) ----- */
-    /* تغییرات قبلی برای .filter-options, .hardness-filter-group و دکمه ها اعمال شده اند. */
-    /* اگر مشکل خاصی در این بخش هنوز وجود دارد، لطفا دقیقتر بفرمایید. */
-    /* مثال: تنظیمات برای .hardness-inputs و input[type="number"] در تغییر قبلی اعمال شد. */
+    .rock-card-mini h3 {
+        font-size: 0.8em; 
+        line-height: 1.3;
+        min-height: 2.6em; /* فضا برای تقریبا سه خط */
+    }
+    /* ----- پایان بخش کانی ها و سنگ ها ----- */
 
-}
-    /* ----- شروع تغییرات بخش سرچ و فیلتر ----- */
+
+    /* ----- بخش سرچ و فیلتر ----- */
     .search-wrapper {
-        margin: 20px auto; /* مارجین کمتر */
-        padding: 0; /* پدینگ خود wrapper حذف شود */
+        margin: 15px auto; 
     }
 
     #searchInput {
-        padding: 12px 15px; /* پدینگ مناسب */
-        font-size: 1em;
-        border-radius: 8px;
+        padding: 10px 12px; 
+        font-size: 0.95em;
     }
     
-    .active-filters {
-        justify-content: flex-start; /* تگ ها از چپ شروع شوند */
-        padding: 0 5px; /* کمی پدینگ برای تگ ها */
-    }
-
-    .filter-tag {
-        padding: 5px 10px; /* پدینگ داخلی تگ */
-        font-size: 0.85em;
-        border-radius: 10px;
-    }
-
-    .filter-container {
-        padding: 15px;
-        margin: 20px auto;
-        border-radius: 10px;
-    }
-
     .filter-options {
-        display: flex;
-        flex-direction: column; /* همه گزینه ها زیر هم */
-        gap: 15px; /* فاصله بیشتر بین گروه های فیلتر */
-        align-items: stretch; /* گزینه ها عرض کامل بگیرند */
+        gap: 12px; 
     }
     
-    /* گروه بندی برای فیلتر سختی */
-    .hardness-filter-group {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch; /* لیبل و اینپوت ها عرض کامل */
-        gap: 8px;
-        width: 100%;
+    .hardness-filter-group label { 
+         font-size: 0.95em;
     }
-    .hardness-filter-group label { /* لیبل سختی */
-         text-align: center; /* یا left اگر ترجیح میدهید */
-         margin-bottom: 0; /* حذف مارجین پایین پیشفرض لیبل */
-         width: auto; /* عرض خودکار */
-         align-self: center; /* لیبل در وسط گروه */
-    }
-    .hardness-inputs { /* div جدید برای اینپوت های سختی */
-        display: flex;
-        justify-content: center; /* اینپوت ها وسط چین در کنار هم */
-        gap: 10px;
-        width: 100%;
-    }
-
-    .filter-options input[type="number"] { /* اینپوت های سختی */
-        width: calc(50% - 5px); /* هر کدام تقریبا نصف عرض، با در نظر گرفتن gap */
-        max-width: 100px; /* یک حداکثر عرض منطقی */
-        padding: 10px; /* پدینگ داخلی */
-        font-size: 0.9em;
-        margin: 0; /* حذف مارجین پیشفرض */
-    }
-
-    .dropdown { /* برای فیلتر رنگ و مکان */
-        width: 100%;
-        max-width: none; /* حذف محدودیت عرض در موبایل */
+    
+    .filter-options input[type="number"] { 
+        width: calc(50% - 8px); 
+        max-width: 90px; 
+        padding: 8px; 
+        font-size: 0.85em;
     }
 
     .dropdown-btn {
-        padding: 12px 20px; /* پدینگ مناسب */
-        font-size: 1em;
-        border-radius: 8px;
-        width: 100%;
-        justify-content: space-between; /* آیکون در انتها قرار گیرد */
+        padding: 10px 15px; 
+        font-size: 0.95em;
     }
     
-    .dropdown-content {
-        width: 100%; /* عرض کامل */
-        transform: translateX(0) translateY(-10px); /* چون دیگر وسط چین نیست */
-        left:0; /* از چپ شروع شود */
-    }
-    .dropdown.active .dropdown-content {
-        transform: translateX(0) translateY(0);
-    }
-    .rtl .dropdown-content { /* برای RTL دراپ داون */
-        left:auto;
-        right:0;
-        transform: translateX(0) translateY(-10px);
-    }
-    .rtl .dropdown.active .dropdown-content {
-        transform: translateX(0) translateY(0);
-    }
-
-
     .filter-buttons {
-        display: flex;
-        justify-content: space-between; /* دکمه ها با فاصله از هم */
-        gap: 10px;
-        width: 100%;
-        margin-top: 20px; /* فاصله بیشتر از بالا */
+        gap: 8px;
+        margin-top: 15px; 
     }
 
     #searchBtn,
     #resetBtn {
-        padding: 12px 15px; /* پدینگ یکسان و مناسب */
-        font-size: 1em;
-        border-radius: 8px;
-        flex: 1; /* هر دو دکمه عرض یکسان بگیرند */
-        max-width: none; /* حذف محدودیت عرض */
+        padding: 10px 12px; 
+        font-size: 0.95em;
     }
-    /* ----- پایان تغییرات بخش سرچ و فیلتر ----- */
+    /* ----- پایان بخش سرچ و فیلتر ----- */
 
 
     /* صفحه اختصاصی و فوتر */
     .rock-detail-card {
-        flex-direction: column;
-        padding: 20px 15px; /* پدینگ تنظیم شده */
-        margin: 15px auto;
-        border-radius: 10px;
+        padding: 15px 10px; 
     }
 
     .rock-detail-card img {
-        width: 100%;
-        max-width: 250px; /* یک حداکثر عرض برای عکس */
-        height: auto; /* ارتفاع خودکار */
-        align-self: center; /* عکس وسط چین */
-        border-radius: 8px;
-    }
-
-    .rock-detail-card .info {
-        gap: 12px; /* فاصله کمتر بین پاراگراف ها */
+        max-width: 200px; 
     }
     
     .rock-detail-card .info #description {
-        font-size: 0.95em; /* کمی کوچکتر */
-        padding: 12px;
+        font-size: 0.9em; 
+        padding: 10px;
     }
 
     .back-btn {
-        padding: 12px 20px; /* پدینگ مناسب */
-        font-size: 1em;
-        border-radius: 8px;
+        padding: 10px 18px; 
+        font-size: 0.95em;
     }
 
     footer {
-        padding: 15px; /* پدینگ بیشتر */
-        font-size: 0.9em;
+        padding: 12px;
+        font-size: 0.85em;
     }
 }
 
