@@ -658,7 +658,7 @@ function setLanguage(lang) {
     const languageList = document.getElementById("languageList");
     if (languageList) languageList.classList.remove("active");
 
-    // این خط حذف شده تا چیدمان همیشه چپ‌چین باقی بماند
+    // این خط حذف شده است تا چیدمان سایت همیشه چپ‌چین باقی بماند
     // document.body.classList.toggle("rtl", lang === "fa"); 
 
     document.getElementById("title").textContent = translations[lang].title;
@@ -671,7 +671,6 @@ function setLanguage(lang) {
     document.getElementById("searchBtn").textContent = translations[lang].searchBtn;
     document.getElementById("resetBtn").textContent = translations[lang].resetBtn;
     
-    // به‌روزرسانی برچسب سختی بر اساس ساختار جدید
     const hardnessLabel = document.querySelector(".filter-row #hardnessLabel");
     if(hardnessLabel) {
         hardnessLabel.textContent = translations[lang].hardnessLabel + ":";
@@ -692,15 +691,6 @@ function setLanguage(lang) {
         displayActiveFilters();
     }
     loadFeaturedSlider();
-}
-
-function toggleMenu() {
-    const sidebar = document.getElementById("sidebar");
-    const menuToggle = document.querySelector(".menu-toggle");
-    if (sidebar && menuToggle) {
-        sidebar.classList.toggle("active");
-        menuToggle.classList.toggle("active");
-    }
 }
 
 function toggleTheme() {
