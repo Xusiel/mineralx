@@ -658,7 +658,7 @@ function setLanguage(lang) {
     const languageList = document.getElementById("languageList");
     if (languageList) languageList.classList.remove("active");
 
-    // This line below has been REMOVED to keep the layout LTR at all times
+    // این خط حذف شده تا چیدمان همیشه چپ‌چین باقی بماند
     // document.body.classList.toggle("rtl", lang === "fa"); 
 
     document.getElementById("title").textContent = translations[lang].title;
@@ -670,7 +670,13 @@ function setLanguage(lang) {
     document.getElementById("searchInput").placeholder = translations[lang].searchPlaceholder;
     document.getElementById("searchBtn").textContent = translations[lang].searchBtn;
     document.getElementById("resetBtn").textContent = translations[lang].resetBtn;
-    document.getElementById("hardnessLabel").textContent = translations[lang].hardnessRange;
+    
+    // به‌روزرسانی برچسب سختی بر اساس ساختار جدید
+    const hardnessLabel = document.querySelector(".filter-row #hardnessLabel");
+    if(hardnessLabel) {
+        hardnessLabel.textContent = translations[lang].hardnessLabel + ":";
+    }
+
     document.getElementById("colorLabel").innerHTML = `${translations[lang].colorLabel} <span class="arrow">▼</span>`;
     document.getElementById("locationLabel").innerHTML = `${translations[lang].locationLabel} <span class="arrow">▼</span>`;
     document.getElementById("menuHome").innerHTML = `<span>🏠</span> ${translations[lang].menuHome}`;
