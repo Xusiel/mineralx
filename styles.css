@@ -1334,96 +1334,101 @@ body.dark-theme .rock-detail-card .info #description {
         font-size: 1.4em;
     }
 
-    /* --- Header & Navigation Fixes --- */
-    header {
-        padding: 10px 15px;
-        flex-wrap: wrap; /* Allow items to wrap if needed */
-    }
-    .logo h1 {
-        font-size: 1.5em;
-    }
-    .controls {
-        gap: 10px;
-    }
-    #sidebar {
-        width: 220px;
-        right: -240px;
-    }
-    #sidebar.active {
-        right: 0;
-    }
+    ر/* --- Header Alignment Fix --- */
+header, .controls {
+    direction: ltr !important;
+}
 
-    /* --- Home Page: "Minerals of the Day" Slider Fixes --- */
-    .hero {
-        padding: 25px 15px;
-        min-height: auto; /* Remove fixed height to prevent stretching */
-        margin: 0;
-    }
-    .slider-container {
-        height: 260px; /* Optimal height for mobile slider */
-        gap: 10px;
-    }
-    .slider-item {
-        width: 140px; /* Consistent item width */
-        padding: 10px;
-    }
-    .slider-item img {
-        width: 110px; /* Properly sized images */
-        height: 110px;
-        margin-bottom: 10px;
-    }
-    .slider-item h3 {
-        font-size: 1em; /* Readable font size for mineral names */
-    }
+.rtl #sidebar {
+    border-left: none;
+    border-right: 3px solid #3498db;
+}
 
-    /* --- Mineral List Page Fixes --- */
-    #rockList, #filteredRockList {
-        grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); /* Creates a 3-column layout on most phones */
-        gap: 12px;
-        padding: 10px;
-    }
-    .rock-card-mini {
-        width: auto; /* Let the grid control the width */
-        padding: 8px;
-    }
-    .rock-card-mini img {
-        width: 100%; /* Make image fill the card width */
-        height: 80px;
-    }
-    .rock-card-mini h3 {
-        font-size: 0.9em;
-    }
+   /* --- Homepage: "Daily Featured Minerals" Slider Fixes --- */
+.hero {
+    padding: 25px 15px;
+    min-height: auto; /* Remove fixed height for better scaling */
+}
 
-    /* --- Search & Filter Page Fixes --- */
-    .filter-container {
-        padding: 15px;
-    }
-    .filter-options {
-        flex-direction: column; /* Stack filter options vertically */
-        align-items: stretch; /* Make all options full-width */
-        gap: 12px;
-    }
-    .filter-options input[type="number"] {
-        width: 100%; /* Full-width input fields */
-        padding: 12px;
-        font-size: 16px;
-        text-align: center;
-    }
-    .dropdown-btn {
-        padding: 12px 15px; /* Smaller, touch-friendly buttons */
-        font-size: 1em;
-        justify-content: center;
-    }
-    .filter-buttons {
-        flex-direction: column; /* Stack Search/Reset buttons */
-        gap: 10px;
-        margin-top: 20px;
-    }
-    #searchBtn, #resetBtn {
-        padding: 12px;
-        font-size: 1em;
-        transform: none !important; /* Prevent hover effects from interfering */
-    }
+.slider-container {
+    height: 250px; /* Reduced height for a more compact slider */
+    gap: 8px;      /* Adjusted spacing between items */
+}
+
+.slider-item {
+    width: 130px;  /* Set a consistent width for each item */
+    padding: 10px;
+}
+
+.slider-item img {
+    width: 100px;  /* Properly sized images */
+    height: 100px;
+    margin-bottom: 8px;
+}
+
+.slider-item h3 {
+    font-size: 1em; /* Optimized font size for readability */
+}
+
+    /* --- Rocks & Minerals Page: 4-Column Mobile Grid --- */
+#rockList, #filteredRockList {
+    grid-template-columns: repeat(4, 1fr); /* Force a 4-column layout */
+    gap: 8px;                              /* Tighter spacing between cards */
+    padding: 10px;
+}
+
+.rock-card-mini {
+    width: auto; /* Allow grid to manage the width */
+    padding: 6px;
+}
+
+.rock-card-mini img {
+    width: 100%; /* Image fills the container width */
+    height: 65px; /* Adjust height for better aspect ratio */
+}
+
+.rock-card-mini h3 {
+    font-size: 0.8em; /* Smaller font for a cleaner look */
+    margin-top: 4px;
+}
+
+    /* --- Search Page: Filter Layout Fixes --- */
+.filter-options {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px; /* Space between rows */
+}
+
+/* New class for rows */
+.filter-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Style for the dropdown buttons row */
+.filter-row .dropdown {
+    flex: 1; /* Make both dropdowns take up equal space */
+}
+.filter-row .dropdown-btn {
+    width: 100%;
+    padding: 10px 5px; /* Smaller padding */
+    font-size: 0.9em;
+    justify-content: center;
+}
+
+/* Style for the hardness inputs row */
+.filter-row #hardnessLabel {
+    flex-shrink: 0; /* Prevent the label from shrinking */
+    margin-right: 5px;
+}
+.filter-row input[type="number"] {
+    flex: 1; /* Make both inputs take up equal space */
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    text-align: center;
+}
 
     /* --- Rock Detail Page Fixes --- */
     .rock-detail-card {
