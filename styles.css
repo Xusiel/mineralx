@@ -1316,103 +1316,151 @@ body.dark-theme .rock-detail-card .info #description {
     border-right-color: #1abc9c;
 }
 
-/* رسپانسیو */
+/* =================================== */
+/* ===== بخش اصلاح‌شده برای موبایل ===== */
+/* =================================== */
 @media (max-width: 768px) {
-    .active-filters {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        white-space: nowrap;
-        padding-bottom: 5px;
+    /* --- تنظیمات عمومی --- */
+    main {
+        margin: 20px 15px;
+        padding: 15px;
     }
-    .filter-tag {
-        flex-shrink: 0;
-    }
-    #sidebar {
-        width: 200px;
-        right: -240px;
-    }
-    #sidebar.active {
-        right: 0;
-    }
+
     .controls {
         gap: 10px;
     }
-    main {
-        margin: 20px;
-        padding: 15px;
+
+    h1 {
+        font-size: 2em;
     }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    .logo h1 {
+        font-size: 1.5em;
+    }
+
+    /* --- صفحه اصلی (Home) --- */
     .hero {
         padding: 30px 15px;
         min-height: 300px;
+        margin: 0;
     }
+
     #title {
-        font-size: 2em;
+        font-size: 2.2em;
     }
+
     #homeText {
         font-size: 1.2em;
     }
+
     .explore-btn {
         padding: 12px 25px;
         font-size: 1em;
     }
+
     .featured-slider {
         max-width: 100%;
-        padding: 0 15px;
+        padding: 0;
     }
+
     .slider-container {
-        height: 300px; /* ارتفاع کوچیک‌تر برای موبایل */
-        gap: 10px; /* فاصله کمتر بین کانی‌ها */
+        height: 280px; /* کاهش ارتفاع اسلایدر */
+        gap: 5px;      /* کاهش فاصله بین آیتم‌ها */
     }
+
     .slider-item {
-        width: 150px; /* عرض کوچیک‌تر برای موبایل */
+        width: 130px;  /* کوچک‌تر کردن عرض هر آیتم */
+        padding: 10px;
     }
+
     .slider-item img {
-        width: 140px;
-        height: 140px;
+        width: 100px;  /* کاهش اندازه تصویر */
+        height: 100px;
+        margin-bottom: 10px;
     }
+
     .slider-item h3 {
-        font-size: 1.2em;
+        font-size: 1.1em; /* کاهش اندازه عنوان کانی */
     }
-    .rock-card {
-        padding: 15px;
-        flex-direction: column;
-    }
-    .rock-card img {
-        width: 100%;
-        height: 150px;
-    }
-    .rock-card-mini {
-        width: 100px;
-    }
-    .rock-card-mini img {
-        width: 80px;
-        height: 80px;
-    }
+
+    /* --- بخش سنگ‌ها و کانی‌ها (Rocks & Minerals) --- */
     #rockList, #filteredRockList {
-        padding: 15px;
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); /* نمایش حداقل ۳ آیتم در هر ردیف */
+        gap: 10px;
+        padding: 10px;
     }
-    h1 {
-        font-size: 2em;
+    
+    .rock-card-mini {
+        width: auto; /* حذف عرض ثابت برای انعطاف‌پذیری */
+        padding: 8px;
     }
-    h2 {
-        font-size: 1.5em;
+
+    .rock-card-mini img {
+        width: 70px;
+        height: 70px;
     }
-    .logo h1 {
-        font-size: 1.5em;
+    
+    .rock-card-mini h3 {
+        font-size: 0.9em;
     }
+
+    /* --- بخش جستجو و فیلتر (Search & Filter) --- */
+    .filter-options {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    
+    .filter-options input[type="number"] {
+        padding: 10px;
+        font-size: 15px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .dropdown-btn {
+        padding: 10px 15px;
+        font-size: 15px;
+        justify-content: center;
+    }
+
+    .filter-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    #searchBtn, #resetBtn {
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    /* --- صفحه جزئیات کانی --- */
     .rock-detail-card {
         flex-direction: column;
-        padding: 15px;
+        padding: 20px;
+        gap: 20px;
     }
+
     .rock-detail-card img {
         width: 100%;
         height: auto;
     }
-    .filter-options {
-        flex-direction: column;
-        align-items: stretch;
+
+    /* --- منوی همبرگری و سایدبار --- */
+    #sidebar {
+        width: 220px;
+        right: -240px;
+    }
+
+    #sidebar.active {
+        right: 0;
     }
 }
+
 
 /* استایل‌های RTL */
 header, .controls, .filter-options, .filter-buttons {
