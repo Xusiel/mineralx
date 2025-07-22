@@ -658,6 +658,9 @@ function setLanguage(lang) {
     const languageList = document.getElementById("languageList");
     if (languageList) languageList.classList.remove("active");
 
+    // This line below has been REMOVED to keep the layout LTR at all times
+    // document.body.classList.toggle("rtl", lang === "fa"); 
+
     document.getElementById("title").textContent = translations[lang].title;
     document.getElementById("homeText").textContent = translations[lang].homeText;
     document.getElementById("rocksTitle").textContent = translations[lang].rocksTitle;
@@ -676,8 +679,6 @@ function setLanguage(lang) {
     document.getElementById("menuAbout").innerHTML = `<span>ℹ️</span> ${translations[lang].menuAbout}`;
     document.querySelector(".explore-btn").textContent = translations[lang].exploreBtn;
     document.getElementById("sliderTitle").textContent = translations[lang].sliderTitle;
-
-    document.body.classList.toggle("rtl", lang === "fa");
 
     if (document.getElementById("rocks").classList.contains("active")) displayRocks("rockList");
     if (document.getElementById("search").classList.contains("active")) {
