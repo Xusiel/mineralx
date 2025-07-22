@@ -74,16 +74,18 @@
             <div class="active-filters" id="activeFilters"></div>
             <div class="filter-container">
                 <div class="filter-options">
-    <div class="filter-row">
-        <div class="dropdown" id="colorFilter">
-            <button class="dropdown-btn" id="colorLabel">Color <span class="arrow">▼</span></button>
-            <div class="dropdown-content"></div>
-        </div>
-        <div class="dropdown" id="locationFilter">
-            <button class="dropdown-btn" id="locationLabel">Location <span class="arrow">▼</span></button>
-            <div class="dropdown-content"></div>
-        </div>
+    <label id="hardnessLabel">Hardness Range:</label>
+    <input type="number" id="hardnessMin" placeholder="Min" min="1" max="10">
+    <input type="number" id="hardnessMax" placeholder="Max" min="1" max="10">
+    <div class="dropdown" id="colorFilter">
+        <button class="dropdown-btn" id="colorLabel">Color <span class="arrow">▼</span></button>
+        <div class="dropdown-content"></div>
     </div>
+    <div class="dropdown" id="locationFilter">
+        <button class="dropdown-btn" id="locationLabel">Location <span class="arrow">▼</span></button>
+        <div class="dropdown-content"></div>
+    </div>
+</div>
     <div class="filter-row">
         <label id="hardnessLabel">Hardness:</label>
         <input type="number" id="hardnessMin" placeholder="Min" min="1" max="10">
