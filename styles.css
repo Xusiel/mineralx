@@ -1316,139 +1316,129 @@ body.dark-theme .rock-detail-card .info #description {
     border-right-color: #1abc9c;
 }
 
-/* =================================== */
-/* ===== بخش اصلاح‌شده برای موبایل ===== */
-/* =================================== */
+/* ======================================================= */
+/* ====== CORRECTED & ENHANCED MOBILE STYLES ====== */
+/* ======================================================= */
 @media (max-width: 768px) {
-    /* --- تنظیمات عمومی --- */
+
+    /* --- General & Layout Fixes --- */
     main {
-        margin: 20px 15px;
+        margin: 15px;
         padding: 15px;
     }
 
-    .controls {
-        gap: 10px;
-    }
-
     h1 {
-        font-size: 2em;
+        font-size: 1.8em; /* Reduced for better mobile heading size */
     }
-
     h2 {
-        font-size: 1.5em;
+        font-size: 1.4em;
     }
 
+    /* --- Header & Navigation Fixes --- */
+    header {
+        padding: 10px 15px;
+        flex-wrap: wrap; /* Allow items to wrap if needed */
+    }
     .logo h1 {
         font-size: 1.5em;
     }
+    .controls {
+        gap: 10px;
+    }
+    #sidebar {
+        width: 220px;
+        right: -240px;
+    }
+    #sidebar.active {
+        right: 0;
+    }
 
-    /* --- صفحه اصلی (Home) --- */
+    /* --- Home Page: "Minerals of the Day" Slider Fixes --- */
     .hero {
-        padding: 30px 15px;
-        min-height: 300px;
+        padding: 25px 15px;
+        min-height: auto; /* Remove fixed height to prevent stretching */
         margin: 0;
     }
-
-    #title {
-        font-size: 2.2em;
-    }
-
-    #homeText {
-        font-size: 1.2em;
-    }
-
-    .explore-btn {
-        padding: 12px 25px;
-        font-size: 1em;
-    }
-
-    .featured-slider {
-        max-width: 100%;
-        padding: 0;
-    }
-
     .slider-container {
-        height: 280px; /* کاهش ارتفاع اسلایدر */
-        gap: 5px;      /* کاهش فاصله بین آیتم‌ها */
+        height: 260px; /* Optimal height for mobile slider */
+        gap: 10px;
     }
-
     .slider-item {
-        width: 130px;  /* کوچک‌تر کردن عرض هر آیتم */
+        width: 140px; /* Consistent item width */
         padding: 10px;
     }
-
     .slider-item img {
-        width: 100px;  /* کاهش اندازه تصویر */
-        height: 100px;
+        width: 110px; /* Properly sized images */
+        height: 110px;
         margin-bottom: 10px;
     }
-
     .slider-item h3 {
-        font-size: 1.1em; /* کاهش اندازه عنوان کانی */
+        font-size: 1em; /* Readable font size for mineral names */
     }
 
-    /* --- بخش سنگ‌ها و کانی‌ها (Rocks & Minerals) --- */
+    /* --- Mineral List Page Fixes --- */
     #rockList, #filteredRockList {
-        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); /* نمایش حداقل ۳ آیتم در هر ردیف */
-        gap: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); /* Creates a 3-column layout on most phones */
+        gap: 12px;
         padding: 10px;
     }
-    
     .rock-card-mini {
-        width: auto; /* حذف عرض ثابت برای انعطاف‌پذیری */
+        width: auto; /* Let the grid control the width */
         padding: 8px;
     }
-
     .rock-card-mini img {
-        width: 70px;
-        height: 70px;
+        width: 100%; /* Make image fill the card width */
+        height: 80px;
     }
-    
     .rock-card-mini h3 {
         font-size: 0.9em;
     }
 
-    /* --- بخش جستجو و فیلتر (Search & Filter) --- */
+    /* --- Search & Filter Page Fixes --- */
+    .filter-container {
+        padding: 15px;
+    }
     .filter-options {
-        flex-direction: column;
-        align-items: stretch;
+        flex-direction: column; /* Stack filter options vertically */
+        align-items: stretch; /* Make all options full-width */
         gap: 12px;
     }
-    
     .filter-options input[type="number"] {
-        padding: 10px;
-        font-size: 15px;
-        width: 100%;
-        text-align: center;
-    }
-
-    .dropdown-btn {
-        padding: 10px 15px;
-        font-size: 15px;
-        justify-content: center;
-    }
-
-    .filter-buttons {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    #searchBtn, #resetBtn {
+        width: 100%; /* Full-width input fields */
         padding: 12px;
         font-size: 16px;
+        text-align: center;
+    }
+    .dropdown-btn {
+        padding: 12px 15px; /* Smaller, touch-friendly buttons */
+        font-size: 1em;
+        justify-content: center;
+    }
+    .filter-buttons {
+        flex-direction: column; /* Stack Search/Reset buttons */
+        gap: 10px;
+        margin-top: 20px;
+    }
+    #searchBtn, #resetBtn {
+        padding: 12px;
+        font-size: 1em;
+        transform: none !important; /* Prevent hover effects from interfering */
     }
 
-    /* --- صفحه جزئیات کانی --- */
+    /* --- Rock Detail Page Fixes --- */
     .rock-detail-card {
         flex-direction: column;
-        padding: 20px;
-        gap: 20px;
+        padding: 15px;
+        gap: 15px;
     }
-
     .rock-detail-card img {
         width: 100%;
-        height: auto;
+        height: auto; /* Maintain aspect ratio */
     }
+    .rock-detail-card .info p {
+        font-size: 0.95em;
+    }
+}
 
     /* --- منوی همبرگری و سایدبار --- */
     #sidebar {
