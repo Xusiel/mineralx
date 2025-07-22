@@ -183,12 +183,10 @@ function displayRocksInSlider(direction = "next") {
 function createSlide(rock, className, animationClass) {
     const slide = document.createElement("div");
     slide.className = `slider-item ${className} ${animationClass || ""}`;
-    const description = rock.description?.[currentLanguage]?.substring(0, 80) + (rock.description?.[currentLanguage]?.length > 80 ? "..." : "") || "";
     slide.innerHTML = `
-        <img src="${rock.image}" alt="${rock.name[currentLanguage]}" onerror="this.src='https://via.placeholder.com/180?text=No+Image';">
-        <h3>${rock.name[currentLanguage]}</h3>
-        ${description ? `<p>${description}</p>` : ""}
-    `;
+    <img src="${rock.image}" alt="${rock.name[currentLanguage]}" onerror="this.src='https://via.placeholder.com/180?text=No+Image';">
+    <h3>${rock.name[currentLanguage]}</h3>
+`;
     slide.addEventListener("click", () => {
         localStorage.setItem("lastSection", lastActiveSection);
         window.location.href = `rock.html?id=${rock.name.en.toLowerCase()}`;
@@ -330,6 +328,16 @@ function showSearchHistory() {
         return;
     }
 
+    // دکمه "پاک کردن تاریخچه" در ابتدا اضافه می‌شود
+    const clearItem = document.createElement("div");
+    clearItem.className = "clear-history";
+    clearItem.textContent = translations[currentLanguage].clearHistory;
+    clearItem.addEventListener("click", () => {
+        clearSearchHistory();
+    });
+    historyDiv.appendChild(clearItem);
+
+    // سپس موارد تاریخچه به لیست اضافه می‌شوند
     history.forEach(term => {
         const historyItem = document.createElement("div");
         historyItem.textContent = term;
@@ -340,14 +348,6 @@ function showSearchHistory() {
         });
         historyDiv.appendChild(historyItem);
     });
-
-    const clearItem = document.createElement("div");
-    clearItem.className = "clear-history";
-    clearItem.textContent = translations[currentLanguage].clearHistory;
-    clearItem.addEventListener("click", () => {
-        clearSearchHistory();
-    });
-    historyDiv.appendChild(clearItem);
 
     historyDiv.style.display = "block";
     suggestionsDiv.style.display = "none";
