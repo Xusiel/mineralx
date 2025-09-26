@@ -1316,146 +1316,103 @@ body.dark-theme .rock-detail-card .info #description {
     border-right-color: #1abc9c;
 }
 
-/* ======================================================= */
-/* ====== CORRECTED & ENHANCED MOBILE STYLES ====== */
-/* ======================================================= */
+/* رسپانسیو */
 @media (max-width: 768px) {
-
-    /* --- General & Layout Fixes --- */
-    main {
-        margin: 15px;
-        padding: 15px;
+    .active-filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 5px;
     }
-
-    h1 {
-        font-size: 1.8em; /* Reduced for better mobile heading size */
+    .filter-tag {
+        flex-shrink: 0;
     }
-    h2 {
-        font-size: 1.4em;
-    }
-
-    ر/* --- Header Alignment Fix --- */
-header, .controls {
-    direction: ltr !important;
-}
-
-.rtl #sidebar {
-    border-left: none;
-    border-right: 3px solid #3498db;
-}
-
-   /* --- Homepage: "Daily Featured Minerals" Slider Fixes --- */
-.hero {
-    padding: 25px 15px;
-    min-height: auto; /* Remove fixed height for better scaling */
-}
-
-.slider-container {
-    height: 250px; /* Reduced height for a more compact slider */
-    gap: 8px;      /* Adjusted spacing between items */
-}
-
-.slider-item {
-    width: 130px;  /* Set a consistent width for each item */
-    padding: 10px;
-}
-
-.slider-item img {
-    width: 100px;  /* Properly sized images */
-    height: 100px;
-    margin-bottom: 8px;
-}
-
-.slider-item h3 {
-    font-size: 1em; /* Optimized font size for readability */
-}
-
-    /* --- Rocks & Minerals Page: 4-Column Mobile Grid --- */
-#rockList, #filteredRockList {
-    grid-template-columns: repeat(4, 1fr); /* Force a 4-column layout */
-    gap: 8px;                              /* Tighter spacing between cards */
-    padding: 10px;
-}
-
-.rock-card-mini {
-    width: auto; /* Allow grid to manage the width */
-    padding: 6px;
-}
-
-.rock-card-mini img {
-    width: 100%; /* Image fills the container width */
-    height: 65px; /* Adjust height for better aspect ratio */
-}
-
-.rock-card-mini h3 {
-    font-size: 0.8em; /* Smaller font for a cleaner look */
-    margin-top: 4px;
-}
-
-    /* --- Search Page: Filter Layout Fixes --- */
-.filter-options {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 15px; /* Space between rows */
-}
-
-/* New class for rows */
-.filter-row {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-/* Style for the dropdown buttons row */
-.filter-row .dropdown {
-    flex: 1; /* Make both dropdowns take up equal space */
-}
-.filter-row .dropdown-btn {
-    width: 100%;
-    padding: 10px 5px; /* Smaller padding */
-    font-size: 0.9em;
-    justify-content: center;
-}
-
-/* Style for the hardness inputs row */
-.filter-row #hardnessLabel {
-    flex-shrink: 0; /* Prevent the label from shrinking */
-    margin-right: 5px;
-}
-.filter-row input[type="number"] {
-    flex: 1; /* Make both inputs take up equal space */
-    width: 100%;
-    padding: 10px;
-    font-size: 1em;
-    text-align: center;
-}
-
-    /* --- Rock Detail Page Fixes --- */
-    .rock-detail-card {
-        flex-direction: column;
-        padding: 15px;
-        gap: 15px;
-    }
-    .rock-detail-card img {
-        width: 100%;
-        height: auto; /* Maintain aspect ratio */
-    }
-    .rock-detail-card .info p {
-        font-size: 0.95em;
-    }
-}
-
-    /* --- منوی همبرگری و سایدبار --- */
     #sidebar {
-        width: 220px;
+        width: 200px;
         right: -240px;
     }
-
     #sidebar.active {
         right: 0;
     }
+    .controls {
+        gap: 10px;
+    }
+    main {
+        margin: 20px;
+        padding: 15px;
+    }
+    .hero {
+        padding: 30px 15px;
+        min-height: 300px;
+    }
+    #title {
+        font-size: 2em;
+    }
+    #homeText {
+        font-size: 1.2em;
+    }
+    .explore-btn {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+    .featured-slider {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+    .slider-container {
+        height: 300px; /* ارتفاع کوچیک‌تر برای موبایل */
+        gap: 10px; /* فاصله کمتر بین کانی‌ها */
+    }
+    .slider-item {
+        width: 150px; /* عرض کوچیک‌تر برای موبایل */
+    }
+    .slider-item img {
+        width: 140px;
+        height: 140px;
+    }
+    .slider-item h3 {
+        font-size: 1.2em;
+    }
+    .rock-card {
+        padding: 15px;
+        flex-direction: column;
+    }
+    .rock-card img {
+        width: 100%;
+        height: 150px;
+    }
+    .rock-card-mini {
+        width: 100px;
+    }
+    .rock-card-mini img {
+        width: 80px;
+        height: 80px;
+    }
+    #rockList, #filteredRockList {
+        padding: 15px;
+    }
+    h1 {
+        font-size: 2em;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
+    .logo h1 {
+        font-size: 1.5em;
+    }
+    .rock-detail-card {
+        flex-direction: column;
+        padding: 15px;
+    }
+    .rock-detail-card img {
+        width: 100%;
+        height: auto;
+    }
+    .filter-options {
+        flex-direction: column;
+        align-items: stretch;
+    }
 }
-
 
 /* استایل‌های RTL */
 header, .controls, .filter-options, .filter-buttons {
