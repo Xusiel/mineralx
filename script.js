@@ -658,9 +658,6 @@ function setLanguage(lang) {
     const languageList = document.getElementById("languageList");
     if (languageList) languageList.classList.remove("active");
 
-    // این خط حذف شده است تا چیدمان سایت همیشه چپ‌چین باقی بماند
-    // document.body.classList.toggle("rtl", lang === "fa"); 
-
     document.getElementById("title").textContent = translations[lang].title;
     document.getElementById("homeText").textContent = translations[lang].homeText;
     document.getElementById("rocksTitle").textContent = translations[lang].rocksTitle;
@@ -670,12 +667,7 @@ function setLanguage(lang) {
     document.getElementById("searchInput").placeholder = translations[lang].searchPlaceholder;
     document.getElementById("searchBtn").textContent = translations[lang].searchBtn;
     document.getElementById("resetBtn").textContent = translations[lang].resetBtn;
-    
-    const hardnessLabel = document.querySelector(".filter-row #hardnessLabel");
-    if(hardnessLabel) {
-        hardnessLabel.textContent = translations[lang].hardnessLabel + ":";
-    }
-
+    document.getElementById("hardnessLabel").textContent = translations[lang].hardnessRange;
     document.getElementById("colorLabel").innerHTML = `${translations[lang].colorLabel} <span class="arrow">▼</span>`;
     document.getElementById("locationLabel").innerHTML = `${translations[lang].locationLabel} <span class="arrow">▼</span>`;
     document.getElementById("menuHome").innerHTML = `<span>🏠</span> ${translations[lang].menuHome}`;
@@ -685,12 +677,23 @@ function setLanguage(lang) {
     document.querySelector(".explore-btn").textContent = translations[lang].exploreBtn;
     document.getElementById("sliderTitle").textContent = translations[lang].sliderTitle;
 
+    document.body.classList.toggle("rtl", lang === "fa");
+
     if (document.getElementById("rocks").classList.contains("active")) displayRocks("rockList");
     if (document.getElementById("search").classList.contains("active")) {
         updateFilters();
         displayActiveFilters();
     }
     loadFeaturedSlider();
+}
+
+function toggleMenu() {
+    const sidebar = document.getElementById("sidebar");
+    const menuToggle = document.querySelector(".menu-toggle");
+    if (sidebar && menuToggle) {
+        sidebar.classList.toggle("active");
+        menuToggle.classList.toggle("active");
+    }
 }
 
 function toggleTheme() {
